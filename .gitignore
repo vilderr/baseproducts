@@ -29,7 +29,9 @@ phpunit.phar
 tests/_output/*
 tests/_support/_generated
 
+/*.txt
 /yii
 /.htaccess
 /index.php
 /index-test.php
+/app/yml_files

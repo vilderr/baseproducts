@@ -142,7 +142,7 @@ class Import extends Model
                 ->where(['parent_id' => $this->next_step['YML_ELEMENTS_ROOT']])
                 ->andWhere(['>', 'id', $this->next_step['LAST_YML_ID']])
                 ->orderBy('id')
-                ->limit(2000)
+                ->limit(3000)
                 ->all();
 
             foreach ($parents as $parent) {
@@ -292,7 +292,8 @@ class Import extends Model
                     $arColors = explode(',', $param->value);
                     $colors = [];
                     foreach ($arColors as $strColor) {
-                        if (($color = $this->checkPropertyValue($this->properties['yml_current_color'], trim($strColor))->reference_section_id) > 0) {
+                        $color = $this->checkPropertyValue($this->properties['yml_current_color'], trim($strColor));
+                        if ($color && $color->reference_section_id > 0) {
                             $colors[] = $color;
                         }
                     }

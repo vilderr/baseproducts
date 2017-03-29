@@ -29,7 +29,7 @@ phpunit.phar
 tests/_output/*
 tests/_support/_generated
 
-/*.txt
+log.*
 /yii
 /.htaccess
 /index.php

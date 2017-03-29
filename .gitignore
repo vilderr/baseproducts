@@ -31,4 +31,5 @@ tests/_support/_generated
 
 /yii
 /.htaccess
+/index.php
 /index-test.php

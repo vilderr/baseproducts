@@ -136,7 +136,7 @@ class Yml extends Model
         if (!array_key_exists("element_stack", $NS))
             $NS["element_stack"] = [];
         $this->element_stack = &$NS["element_stack"];
-
+        s
         if (!array_key_exists("file_position", $NS))
             $NS["file_position"] = 0;
         $this->file_position = &$NS["file_position"];
@@ -391,6 +391,9 @@ class Yml extends Model
     {
         $child = array_pop($this->element_stack);
         $this->element_stack[count($this->element_stack) - 1]["R"] = $child["R"] + 1;
+
+        if (!isset($child["RO"]))
+            $child['RO'] = null;
 
         if ($child["R"] != $child["RO"]) {
             Yii::$app->db->createCommand(

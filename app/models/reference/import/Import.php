@@ -164,7 +164,7 @@ class Import extends Model
                             'type'     => 'group_element',
                             'group_id' => $attributes['group_id'],
                             'shop'     => $this->next_step['SHOP_CODE'],
-                            'model'    => ($arYMLElement['model'] !== null) ? $arYMLElement['model'] : $arYMLElement['name'],
+                            'model'    => (isset($arYMLElement['model'])) ? $arYMLElement['model'] : $arYMLElement['name'],
                         ];
 
                         $arYMLElement['xml_id'] = $this->getElementMD($arOfferGroupHash);
@@ -188,7 +188,7 @@ class Import extends Model
                         $arElementHash = [
                             'type'  => 'element',
                             'id'    => $arYMLElement['id'],
-                            'model' => ($arYMLElement['model'] !== null) ? $arYMLElement['model'] : $arYMLElement['name'],
+                            'model' => (isset($arYMLElement['model'])) ? $arYMLElement['model'] : $arYMLElement['name'],
                             'shop'  => $this->next_step['SHOP_CODE'],
                         ];
 

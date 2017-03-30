@@ -131,7 +131,7 @@ class Yml extends Model
      * @param int $read_size
      * @return bool
      */
-    public function readToBase($fp, &$NS, $time_limit, $read_size = 102400)
+    public function readToBase($fp, &$NS, $time_limit, $read_size = 1024)
     {
         if (!array_key_exists("element_stack", $NS))
             $NS["element_stack"] = [];

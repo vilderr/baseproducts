@@ -34,6 +34,11 @@ html {
     color: #FFF;
 }
 
+#admin-body .header .logo a {
+    color: #ffffff !important;
+    text-decoration:none;
+}
+
 #admin-body .header .logo img {
     vertical-align: baseline;
 }
@@ -138,6 +143,7 @@ html {
     border-radius: 0 !important;
     text-align: left;
 }
+
 #admin-body .main .page-sizer {
     margin: 20px 20px 20px 0;
 }

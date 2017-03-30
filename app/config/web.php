@@ -46,7 +46,7 @@ $config = [
         'user'         => [
             'identityClass'   => 'app\models\user\User',
             'enableAutoLogin' => true,
-            'loginUrl' => 'sign/in'
+            'loginUrl' => '/sign/in'
         ],
         'authManager'  => [
             'class' => 'app\models\user\AuthManager',

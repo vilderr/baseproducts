@@ -10,7 +10,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
-use yii\widgets\Menu;
+use app\widgets\menu\Menu;
 
 AppAsset::register($this);
 ?>
@@ -29,10 +29,11 @@ AppAsset::register($this);
     <div class="wrapper">
         <div class="header">
             <div class="logo">
-                BaseProducts.ru
+                <?= Html::a('BaseProducts.ru', Yii::$app->homeUrl, ['id' => 'home-logo']);?>
             </div>
             <div class="nav">
-                <a href="<?= Url::to(['/sign/out']) ?>" class="pull-right"><i class="glyphicon glyphicon-log-out"></i> Выход</a>
+                <a href="<?= Url::to(['/sign/out']) ?>" class="pull-right"><i class="glyphicon glyphicon-log-out"></i>
+                    Выход</a>
             </div>
         </div>
         <div class="main">
@@ -40,7 +41,12 @@ AppAsset::register($this);
                 <?= Menu::widget(
                     [
                         'id'    => 'admin-menu',
-                        'items' => []
+                        'items' => [
+                            [
+                                'label' => 'Типы справочников',
+                                'url'   => Url::toRoute('/reference-type'),
+                            ]
+                        ],
                     ]
                 ); ?>
             </div>
@@ -52,7 +58,7 @@ AppAsset::register($this);
                         'homeLink' => ['label' => 'Главная', 'url' => '/'],
                         'links'    => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
                     ]) ?>
-                    <?php foreach(Yii::$app->session->getAllFlashes() as $key => $message) : ?>
+                    <?php foreach (Yii::$app->session->getAllFlashes() as $key => $message) : ?>
                         <p class="bg-<?= $key ?> text-<?= $key ?> small notify"><?= $message ?></p>
                     <?php endforeach; ?>
                     <?= $content ?>

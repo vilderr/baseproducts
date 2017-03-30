@@ -392,9 +392,6 @@ class Yml extends Model
         $child = array_pop($this->element_stack);
         $this->element_stack[count($this->element_stack) - 1]["R"] = $child["R"] + 1;
 
-        if (!isset($child["RO"]))
-            $child['RO'] = null;
-
         if ($child["R"] != $child["RO"]) {
             Yii::$app->db->createCommand(
                 'UPDATE ' . YmlTree::tableName() . ' SET rgt = ' . intval($child["R"]) . ' WHERE id = ' . intval($child["ID"]),

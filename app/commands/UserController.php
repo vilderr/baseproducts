@@ -10,7 +10,7 @@ namespace app\commands;
 
 use yii\base\Model;
 use yii\console\Controller;
-use app\modules\user\models\User;
+use app\models\user\User;
 use yii\console\Exception;
 use yii\helpers\Console;
 

@@ -148,6 +148,8 @@ class Import extends Model
             foreach ($parents as $parent) {
                 $counter['CRC']++;
                 $attributes = unserialize($parent['attrs']);
+                if (!isset($attributes['available']))
+                    $attributes['available'] = 'true';
 
                 if ($attributes['available'] == 'true') {
                     $arYMLElement = ArrayHelper::getColumn(YmlTree::find()->select(['name', 'value', 'attrs'])->where(['parent_id' => $parent->id])->indexBy('name')->asArray()->all(), 'value');

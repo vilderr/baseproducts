@@ -63,13 +63,8 @@ $config = [
             'targets'    => [
                 [
                     'class'  => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning', 'trace'],
-                ],
-                [
-                    'class'  => 'yii\log\FileTarget',
-                    'levels' => ['trace'],
-                    'logFile' => '@app/log.txt'
-                ],
+                    'levels' => ['error', 'warning'],
+                ]
             ],
         ],
         'db'           => require(__DIR__ . '/db.php'),
@@ -109,6 +104,9 @@ $config = [
                 ],
             ],
         ],
+        'session' => [
+            'class' => 'yii\web\DbSession',
+        ]
     ],
     'params'       => $params,
 ];

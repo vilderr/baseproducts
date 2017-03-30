@@ -142,7 +142,7 @@ class Import extends Model
                 ->where(['parent_id' => $this->next_step['YML_ELEMENTS_ROOT']])
                 ->andWhere(['>', 'id', $this->next_step['LAST_YML_ID']])
                 ->orderBy('id')
-                ->limit(3000)
+                ->limit(5000)
                 ->all();
 
             foreach ($parents as $parent) {
@@ -246,16 +246,18 @@ class Import extends Model
 
             if (array_key_exists('categoryId', $arYMLElement)) {
                 $id = $arYMLElement['categoryId'];
-                $sectStr = [];
-                for ($i = 0; $i < 10; $i++) {
-                    $sectStr[] = $this->SECTION_MAP[$id]['name'];
-                    if (isset($this->SECTION_MAP[$id]['parent_id'])) {
-                        $id = $this->SECTION_MAP[$id]['parent_id'];
-                    } else {
-                        break;
+                if (isset($this->SECTION_MAP[$id])) {
+                    $sectStr = [];
+                    for ($i = 0; $i < 10; $i++) {
+                        $sectStr[] = $this->SECTION_MAP[$id]['name'];
+                        if (isset($this->SECTION_MAP[$id]['parent_id'])) {
+                            $id = $this->SECTION_MAP[$id]['parent_id'];
+                        } else {
+                            break;
+                        }
                     }
+                    $arElement['current_section'] = implode('/', array_reverse($sectStr));
                 }
-                $arElement['current_section'] = implode('/', array_reverse($sectStr));
             }
 
             if (array_key_exists('vendor', $arYMLElement))

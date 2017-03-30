@@ -10,6 +10,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use yii\widgets\Menu;
 
 AppAsset::register($this);
 ?>
@@ -35,7 +36,14 @@ AppAsset::register($this);
             </div>
         </div>
         <div class="main">
-            <div class="box sidebar"></div>
+            <div class="box sidebar">
+                <?= Menu::widget(
+                    [
+                        'id'    => 'admin-menu',
+                        'items' => []
+                    ]
+                ); ?>
+            </div>
             <div class="box content">
                 <div class="page-title"><?= $this->title ?></div>
                 <div class="container-fluid">

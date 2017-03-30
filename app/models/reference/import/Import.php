@@ -246,16 +246,18 @@ class Import extends Model
 
             if (array_key_exists('categoryId', $arYMLElement)) {
                 $id = $arYMLElement['categoryId'];
-                if (isset($this->SECTION_MAP[$id])) {
+                if (isset($this->SECTION_MAP[$id]))
+                {
                     $sectStr = [];
                     for ($i = 0; $i < 10; $i++) {
                         $sectStr[] = $this->SECTION_MAP[$id]['name'];
-                        if (isset($this->SECTION_MAP[$id]['parent_id'])) {
+                        if (isset($this->SECTION_MAP[$id]['parent_id']) && isset($this->SECTION_MAP[$this->SECTION_MAP[$id]['parent_id']])) {
                             $id = $this->SECTION_MAP[$id]['parent_id'];
                         } else {
                             break;
                         }
                     }
+
                     $arElement['current_section'] = implode('/', array_reverse($sectStr));
                 }
             }

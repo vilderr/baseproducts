@@ -192,6 +192,7 @@ trait ImportTrait
                     echo '<script>DoNext(' . Json::encode(['NS' => $NS]) . ')</script>';
 
                 } else {
+                    unlink($NS['FILES'][0]);
                     array_shift($NS['FILES']);
                     if (count($NS['FILES']) > 0) {
                         $NS = [
@@ -207,6 +208,7 @@ trait ImportTrait
                     }
                 }
             } else {
+                unlink($NS['FILES'][0]);
                 array_shift($NS['FILES']);
                 if (count($NS['FILES']) > 0) {
                     $NS = [

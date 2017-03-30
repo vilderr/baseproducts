@@ -8,3 +8,5 @@
  */
 
 $this->title = Yii::t('app', 'Admin Panel');
+
+echo '<pre>'; print_r($_SERVER); echo '</pre>';

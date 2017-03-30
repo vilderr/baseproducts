@@ -246,8 +246,7 @@ class Import extends Model
 
             if (array_key_exists('categoryId', $arYMLElement)) {
                 $id = $arYMLElement['categoryId'];
-                if (isset($this->SECTION_MAP[$id]))
-                {
+                if (isset($this->SECTION_MAP[$id])) {
                     $sectStr = [];
                     for ($i = 0; $i < 10; $i++) {
                         $sectStr[] = $this->SECTION_MAP[$id]['name'];
@@ -271,10 +270,12 @@ class Import extends Model
                 if (array_key_exists('oldprice', $arYMLElement)) {
                     $arElement['oldprice'] = intval($arYMLElement['oldprice']);
 
-                    $percent = ($arElement['price'] * 100) / $arElement['oldprice'];
-                    $discount = 100 - round($percent);
+                    if ($arElement['oldprice'] > 0) {
+                        $percent = ($arElement['price'] * 100) / $arElement['oldprice'];
+                        $discount = 100 - round($percent);
 
-                    $arElement['discount'] = $discount;
+                        $arElement['discount'] = $discount;
+                    }
                 } else {
                     $arElement['oldprice'] = null;
                     $arElement['discount'] = null;

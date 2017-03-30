@@ -11,6 +11,12 @@ namespace app\models\reference\import;
 use Yii;
 use yii\db\ActiveRecord;
 
+/**
+ * Class YmlTree
+ * @package app\models\reference\import
+ *
+ * @property string $name
+ */
 class YmlTree extends ActiveRecord
 {
     /**

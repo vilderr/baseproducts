@@ -40,7 +40,7 @@ trait ImportTrait
                 $NS = [
                     'STEP'         => 0,
                     'REFERENCE_ID' => $reference->id,
-                    'FILES'        => Import::getFiles(),
+                    'FILES'        => Import::getFiles(),top
                 ];
             }
 

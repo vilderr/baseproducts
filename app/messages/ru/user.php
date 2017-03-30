@@ -7,7 +7,7 @@
  */
 
 return [
-    'login-form-title'        => 'Авторизация',
+    'Login Form'              => 'Авторизация',
     'login'                   => 'Логин',
     'password'                => 'Пароль',
     'forgot-password'         => 'Забыли пароль?',

@@ -6,3 +6,5 @@
  * Time: 14:20
  * @var $this yii\web\View
  */
+
+$this->title = Yii::t('app', 'Admin Panel');

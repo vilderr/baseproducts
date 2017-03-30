@@ -7,5 +7,5 @@
  */
 
 return [
-    'admin-panel-title' => 'Панель управления'
+    'Admin Panel' => 'Панель управления'
 ];

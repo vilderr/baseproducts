@@ -1,2 +1,3 @@
 *.txt
-/modules
+modules
+yml_files

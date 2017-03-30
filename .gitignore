@@ -33,3 +33,4 @@ tests/_support/_generated
 /.htaccess
 /index.php
 /index-test.php
+yml_files/*

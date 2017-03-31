@@ -79,6 +79,7 @@ return [
     'Import Hash'                        => 'Метка импорта',
     'Brand'                              => 'Бренд',
     'Import Marker'                      => 'Метка импорта',
+    'Reference Import'                   => 'Импорт товаров',
 
     //hints
     'is-catalog-hint'                    => 'Является ли справочник каталогом товаров?',

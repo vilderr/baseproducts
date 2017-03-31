@@ -16,6 +16,8 @@ use app\assets\reference\ImportAsset;
 ImportAsset::register($this);
 
 $this->title = 'Импорт элементов из YML файла';
+$this->params['breadcrumbs'][] = ['label' => $reference->name, 'url' => ['/reference/section', 'type' => $reference->reference_type_id, 'reference_id' => $reference->id]];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app/reference', 'Reference Import')];
 ?>
 <div id="import_result_div"></div>
 <div class="import-form">

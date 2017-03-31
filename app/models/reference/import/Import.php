@@ -30,7 +30,7 @@ class Import extends Model
      */
     public $next_step;
     /**
-     * @var \app\modules\admin\models\Reference
+     * @var \app\models\reference\Reference
      */
     public $reference;
     /**
@@ -307,6 +307,29 @@ class Import extends Model
 
                     $PID = $this->properties['yml_color']->id;
                     $arProperty[$PID] = $this->setPropertyValues($properties[$PID], array_unique($colors));
+                } elseif ($attributes['name'] == Yii::t('app/ymlimport', 'yml_prop_dimension')) {
+                    $arDimensions = explode('|', $param->value);
+                    $dimensions = [];
+                    foreach ($arDimensions as $strDimension) {
+                        $dimension = $this->checkPropertyValue($this->properties['yml_current_dimension'], trim($strDimension));
+                        if ($dimension && $dimension->reference_section_id > 0) {
+                            $dimensions[] = $dimension;
+                        }
+                    }
+
+                    $PID = $this->properties['yml_dimension']->id;
+                    $arProperty[$PID] = $this->setPropertyValues($properties[$PID], array_unique($dimensions));
+                } elseif ($attributes['name'] == Yii::t('app/ymlimport', 'yml_prop_material')) {
+                    $arMaterial = explode(',', $param->value);
+                    $materails = [];
+                    foreach ($arMaterial as $strMaterial) {
+                        $material = $this->checkPropertyValue($this->properties['yml_current_material'], trim($strMaterial));
+                        if ($material && $material->reference_section_id > 0) {
+                            $materails[] = $material;
+                        }
+                    }
+                    $PID = $this->properties['yml_material']->id;
+                    $arProperty[$PID] = $this->setPropertyValues($properties['$PID'], array_unique($materails));
                 }
             }
         }
@@ -520,7 +543,7 @@ class Import extends Model
     protected function getProperties()
     {
         return [
-            'yml_current_color' => [
+            'yml_current_color'     => [
                 'name'              => 'Исходный цвет',
                 'type'              => 'LE',
                 'code'              => 'current_color',
@@ -528,12 +551,44 @@ class Import extends Model
                 'link_reference_id' => 7,
                 'multiple'          => 1,
             ],
-            'yml_color'         => [
+            'yml_color'             => [
                 'name'              => 'Цвет',
                 'type'              => 'LS',
                 'code'              => 'color',
                 'xml_id'            => 'yml_color',
                 'link_reference_id' => 7,
+                'multiple'          => 1,
+            ],
+            'yml_current_dimension' => [
+                'name'              => 'Исходный размер',
+                'type'              => 'LE',
+                'code'              => 'current_dimension',
+                'xml_id'            => 'yml_current_dimension',
+                'link_reference_id' => 8,
+                'multiple'          => 1,
+            ],
+            'yml_dimension'         => [
+                'name'              => 'Размер',
+                'type'              => 'LS',
+                'code'              => 'dimension',
+                'xml_id'            => 'yml_dimension',
+                'link_reference_id' => 8,
+                'multiple'          => 1,
+            ],
+            'yml_current_material' => [
+                'name'              => 'Исходный материал',
+                'type'              => 'LE',
+                'code'              => 'current_material',
+                'xml_id'            => 'yml_current_material',
+                'link_reference_id' => 9,
+                'multiple'          => 1,
+            ],
+            'yml_material'         => [
+                'name'              => 'Maтериал',
+                'type'              => 'LS',
+                'code'              => 'material',
+                'xml_id'            => 'yml_material',
+                'link_reference_id' => 9,
                 'multiple'          => 1,
             ],
         ];

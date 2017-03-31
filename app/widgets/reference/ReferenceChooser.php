@@ -4,7 +4,7 @@ namespace app\widgets\reference;
 use yii\base\Widget;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use app\modules\admin\models\Reference;
+use app\models\reference\Reference;
 use app\models\reference\ReferenceType;
 use app\assets\reference\ReferenceChooserAsset;
 

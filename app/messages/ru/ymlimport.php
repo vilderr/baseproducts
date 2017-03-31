@@ -7,5 +7,7 @@
  */
 
 return [
-    'yml_prop_color' => 'Цвет',
+    'yml_prop_color'     => 'Цвет',
+    'yml_prop_dimension' => 'Размер',
+    'yml_prop_material'  => 'Материал',
 ];

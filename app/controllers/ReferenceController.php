@@ -2,7 +2,6 @@
 
 namespace app\controllers;
 
-use app\controllers\reference\ImportTrait;
 use Yii;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -16,6 +15,7 @@ use app\models\reference\search\ReferenceSearch;
 use app\components\Controller;
 use app\controllers\reference\SectionTrait;
 use app\controllers\reference\ElementTrait;
+use app\controllers\reference\ImportTrait;
 
 /**
  * ReferenceController implements the CRUD actions for Reference model.
@@ -31,7 +31,8 @@ class ReferenceController extends Controller
      */
     public function behaviors()
     {
-        return [
+
+        $b = [
             'verbs' => [
                 'class'   => VerbFilter::className(),
                 'actions' => [
@@ -44,6 +45,8 @@ class ReferenceController extends Controller
                 ],
             ],
         ];
+
+        return ArrayHelper::merge(parent::behaviors(), $b);
     }
 
     /**

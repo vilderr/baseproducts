@@ -24,7 +24,7 @@ class ReferenceTypeController extends Controller
      */
     public function behaviors()
     {
-        return [
+        $b = [
             'verbs' => [
                 'class'   => VerbFilter::className(),
                 'actions' => [
@@ -32,6 +32,8 @@ class ReferenceTypeController extends Controller
                 ],
             ],
         ];
+
+        return ArrayHelper::merge(parent::behaviors(), $b);
     }
 
     /**

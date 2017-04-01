@@ -476,7 +476,7 @@ class Import extends Model
     public static function getFiles()
     {
         $files = FileHelper::findFiles(Yii::getAlias(static::$filePath));
-
+        sort($files);
         return $files;
     }
 

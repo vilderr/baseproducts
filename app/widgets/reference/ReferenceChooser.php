@@ -17,7 +17,7 @@ class ReferenceChooser extends Widget
     /**
      * text for label
      * label not render if it's null
-     * @var string 
+     * @var string
      */
     public $header;
     /**
@@ -72,14 +72,13 @@ class ReferenceChooser extends Widget
     {
         parent::init();
 
-        if($this->reference_id !== null)
-        {
+        if ($this->reference_id !== null) {
             $reference = Reference::findOne(['id' => $this->reference_id]);
             $this->reference_type_id = $reference['reference_type_id'];
         }
-        
-        $this->uid = preg_replace ('/[^a-zA-Z0-9\s]/', '', $this->reference_id_name);
-        
+
+        $this->uid = preg_replace('/[^a-zA-Z0-9\s]/', '', $this->reference_id_name);
+
         $this->initOptions();
 
         echo Html::beginTag('div', $this->options) . "\n"; //start widget box
@@ -88,7 +87,7 @@ class ReferenceChooser extends Widget
         echo Html::beginTag('div', ['class' => 'col-xs-6']);
         echo $this->renderReferenceTypeChooser() . "\n";
         echo Html::endTag('div');
-        echo Html::beginTag('div', ['class' => 'col-xs-6', 'id' => 'reference_chooser_'.$this->uid]);
+        echo Html::beginTag('div', ['class' => 'col-xs-6', 'id' => 'reference_chooser_' . $this->uid]);
         echo $this->renderReferenceChooser() . "\n";
         echo Html::endTag('div');
     }
@@ -96,7 +95,8 @@ class ReferenceChooser extends Widget
     /**
      * Renders the widget.
      */
-    public function run() {
+    public function run()
+    {
         echo "\n" . Html::endTag('div'); //end lists
         echo "\n" . Html::endTag('div'); //end widget box
         $this->registerPlugin('chooser');
@@ -117,8 +117,7 @@ class ReferenceChooser extends Widget
      */
     protected function renderHeader()
     {
-        if($this->header !== null)
-        {
+        if ($this->header !== null) {
             Html::addCssClass($this->headerOptions, ['widget' => 'chooser-label']);
             return Html::tag('label', $this->header, $this->headerOptions);
         }
@@ -130,16 +129,18 @@ class ReferenceChooser extends Widget
      * renders referenceType dropdown list
      * @return string
      */
-    protected function renderReferenceTypeChooser() {
+    protected function renderReferenceTypeChooser()
+    {
         //echo '<pre>';print_r($this);echo'</pre>';
-        return Html::dropDownList($this->reference_type_id_name, $this->reference_type_id, $this->getReferenceTypes(), ['class' => 'form-control chooser', 'data-name' => $this->reference_id_name, 'data-id' => $this->reference_id_select_id, 'data-url' => $this->request_url, 'data-target' => '#reference_chooser_'.$this->uid]);
+        return Html::dropDownList($this->reference_type_id_name, $this->reference_type_id, $this->getReferenceTypes(), ['class' => 'form-control chooser', 'data-name' => $this->reference_id_name, 'data-id' => $this->reference_id_select_id, 'data-url' => $this->request_url, 'data-target' => '#reference_chooser_' . $this->uid]);
     }
 
     /**
      * renders reference dropdown list
      * @return string
      */
-    protected function renderReferenceChooser() {
+    protected function renderReferenceChooser()
+    {
         return Html::dropDownList($this->reference_id_name, $this->reference_id, $this->getReferences(), ['class' => 'form-control', 'id' => $this->reference_id_select_id]);
     }
 
@@ -147,14 +148,15 @@ class ReferenceChooser extends Widget
      * find all reference types and make new array for dropdown list
      * @return array
      */
-    protected function getReferenceTypes() {
+    protected function getReferenceTypes()
+    {
         $result = [
             '' => '-- Тип справочника --',
         ];
-        $types  = ReferenceType::find()->select(['id', 'name'])->asArray()->all();
+        $types = ReferenceType::find()->select(['id', 'name'])->asArray()->all();
 
         foreach ($types as $type) {
-            $key   = ArrayHelper::getValue($type, 'id');
+            $key = ArrayHelper::getValue($type, 'id');
             $value = ArrayHelper::getValue($type, 'name');
 
             $result[$key] = $value;
@@ -188,7 +190,8 @@ class ReferenceChooser extends Widget
      * Registers a specific reference plugin
      * @param string $name the name of reference js plugin
      */
-    protected function registerPlugin($name) {
+    protected function registerPlugin($name)
+    {
         $view = $this->getView();
         ReferenceChooserAsset::register($view);
     }

@@ -23,26 +23,27 @@ $labels = $model->attributeLabels();
 $additionalTypes = Json::encode(ReferenceProperty::getAdditionalTypes());
 //echo'<pre>';print_r($model->attributeLabels());echo '</pre>';
 ?>
-<div class="row">
-    <div class="col-xs-4 required"><?= Html::label($model->getAttributeLabel('name'))?></div>
-    <div class="col-xs-3 required"><?= Html::label($model->getAttributeLabel('type'))?></div>
-    <div class="col-xs-2"><?= Html::label($model->getAttributeLabel('sort'))?></div>
-    <div class="col-xs-1"><?= Html::label($model->getAttributeLabel('multiple'))?></div>
-    <div class="col-xs-1"><?= Html::label($model->getAttributeLabel('active'))?></div>
-    <div class="col-xs-1"></div>
-</div>
-<hr class="xs" />
-<div id="property-list">
-<?
-foreach ($properties as $uid => $property) {
-    echo $this->render('_property_line', [
-        'model' => $property,
-        'PID'   => $uid,
-    ]);
-}
-?>
-</div>
-<p class="text-center" id="add-prop-box"><?= Html::a('<i class="fa fa-plus"></i> Добавить свойство', '#', ['id' => 'new-prop-add', 'class' => 'btn btn-info']);?></p>
+    <div class="row">
+        <div class="col-xs-4 required"><?= Html::label($model->getAttributeLabel('name')) ?></div>
+        <div class="col-xs-3 required"><?= Html::label($model->getAttributeLabel('type')) ?></div>
+        <div class="col-xs-2"><?= Html::label($model->getAttributeLabel('sort')) ?></div>
+        <div class="col-xs-1"><?= Html::label($model->getAttributeLabel('multiple')) ?></div>
+        <div class="col-xs-1"><?= Html::label($model->getAttributeLabel('active')) ?></div>
+        <div class="col-xs-1"></div>
+    </div>
+    <hr class="xs"/>
+    <div id="property-list">
+        <?
+        foreach ($properties as $uid => $property) {
+            echo $this->render('_property_line', [
+                'model' => $property,
+                'PID'   => $uid,
+            ]);
+        }
+        ?>
+    </div>
+    <p class="text-center"
+       id="add-prop-box"><?= Html::a('<i class="fa fa-plus"></i> Добавить свойство', '#', ['id' => 'new-prop-add', 'class' => 'btn btn-info']); ?></p>
 <?
 $propUrl = Url::to(['/reference/load-property-line']);
 

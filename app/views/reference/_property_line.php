@@ -64,7 +64,13 @@ use yii\helpers\Json;
         <div class="form-group<?= ($model->isAttributeRequired('service')) ? ' required' : ''; ?>">
             <?= Html::activeCheckbox($model, '[' . $PID . ']service'); ?>
         </div>
-        <div id="advanced-setting-box-<?= $PID ?>"></div>
+        <div id="advanced-setting-box-<?= $PID ?>">
+            <?= $this->render('_property_setting', [
+                'model'       => $model,
+                'type'        => $model->type,
+                'property_id' => $PID,
+            ]); ?>
+        </div>
         <div id="delete-property-<?= $PID ?>" class="alert alert-danger small notify">
             <label class="text-danger"
                    style="margin: 0;"><?= Html::checkbox($model->formName() . '[' . $PID . '][delete]', $model->delete) ?> <?= $model->getAttributeLabel('delete') ?></label>

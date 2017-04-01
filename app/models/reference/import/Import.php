@@ -295,41 +295,70 @@ class Import extends Model
             foreach ($params as $param) {
                 $attributes = unserialize($param->attrs);
 
-                if ($attributes['name'] == Yii::t('app/ymlimport', 'yml_prop_color')) {
+                if (ArrayHelper::isIn(strtolower($attributes['name']), [Yii::t('app/ymlimport', 'yml_prop_color'), Yii::t('app/ymlimport', 'yml_prop_color_lat')])) {
                     $arColors = explode(',', $param->value);
                     $colors = [];
                     foreach ($arColors as $strColor) {
                         $color = $this->checkPropertyValue($this->properties['yml_current_color'], trim($strColor));
                         if ($color && $color->reference_section_id > 0) {
-                            $colors[] = $color;
+                            $colors[] = $color->reference_section_id;
                         }
                     }
 
                     $PID = $this->properties['yml_color']->id;
-                    $arProperty[$PID] = $this->setPropertyValues($properties[$PID], array_unique($colors));
-                } elseif ($attributes['name'] == Yii::t('app/ymlimport', 'yml_prop_dimension')) {
-                    $arDimensions = explode('|', $param->value);
+                    $arProperty[$PID] = (isset($arProperty[$PID])) ? $arProperty[$PID] : [];
+                    $arProperty[$PID] = ArrayHelper::merge($arProperty[$PID], $this->setPropertyValues($properties[$PID], array_unique($colors)));
+                } elseif (ArrayHelper::isIn(strtolower($attributes['name']), [Yii::t('app/ymlimport', 'yml_prop_dimension'), Yii::t('app/ymlimport', 'yml_prop_dimensions'), Yii::t('app/ymlimport', 'yml_prop_dimension_lat')])) {
+                    $currentStr = str_replace('|', ',', $param->value);
+                    $arDimensions = explode(',', $currentStr);
                     $dimensions = [];
                     foreach ($arDimensions as $strDimension) {
                         $dimension = $this->checkPropertyValue($this->properties['yml_current_dimension'], trim($strDimension));
                         if ($dimension && $dimension->reference_section_id > 0) {
-                            $dimensions[] = $dimension;
+                            $dimensions[] = $dimension->reference_section_id;
                         }
                     }
 
                     $PID = $this->properties['yml_dimension']->id;
-                    $arProperty[$PID] = $this->setPropertyValues($properties[$PID], array_unique($dimensions));
-                } elseif ($attributes['name'] == Yii::t('app/ymlimport', 'yml_prop_material')) {
+                    $arProperty[$PID] = (isset($arProperty[$PID])) ? $arProperty[$PID] : [];
+                    $arProperty[$PID] = ArrayHelper::merge($arProperty[$PID], $this->setPropertyValues($properties[$PID], array_unique($dimensions)));
+                } elseif (ArrayHelper::isIn(strtolower($attributes['name']), [Yii::t('app/ymlimport', 'yml_prop_material'), Yii::t('app/ymlimport', 'yml_prop_material_lat')])) {
                     $arMaterial = explode(',', $param->value);
                     $materails = [];
                     foreach ($arMaterial as $strMaterial) {
                         $material = $this->checkPropertyValue($this->properties['yml_current_material'], trim($strMaterial));
                         if ($material && $material->reference_section_id > 0) {
-                            $materails[] = $material;
+                            $materails[] = $material->reference_section_id;
                         }
                     }
                     $PID = $this->properties['yml_material']->id;
-                    $arProperty[$PID] = $this->setPropertyValues($properties[$PID], array_unique($materails));
+                    $arProperty[$PID] = (isset($arProperty[$PID])) ? $arProperty[$PID] : [];
+                    $arProperty[$PID] = ArrayHelper::merge($arProperty[$PID], $this->setPropertyValues($properties[$PID], array_unique($materails)));
+                } elseif (ArrayHelper::isIn(strtolower($attributes['name']), [Yii::t('app/ymlimport', 'yml_prop_gender'), Yii::t('app/ymlimport', 'yml_prop_gender_lat')])) {
+                    $genders = [];
+                    $gender = $this->checkPropertyValue($this->properties['yml_current_gender'], trim($param->value));
+                    if ($gender && $gender->reference_section_id > 0) {
+                        $genders[] = $gender->reference_section_id;
+                    }
+                    $PID = $this->properties['yml_gender']->id;
+                    $arProperty[$PID] = $this->setPropertyValues($properties[$PID], $genders);
+                }
+                elseif (ArrayHelper::isIn(strtolower($attributes['name']), [Yii::t('app/ymlimport', 'yml_prop_season'), Yii::t('app/ymlimport', 'yml_prop_season_ext')]))
+                {
+                    $arSesons = explode(',', $param->value);
+                    $seasons = [];
+                    foreach ($arSesons as $strSeason)
+                    {
+                        $season = $this->checkPropertyValue($this->properties['yml_current_seazon'], trim($strSeason));
+                        if ($season && $season->reference_section_id > 0)
+                        {
+                            $seasons[] = $season->reference_section_id;
+                        }
+                    }
+
+                    $PID = $this->properties['yml_seazon']->id;
+                    $arProperty[$PID] = (isset($arProperty[$PID])) ? $arProperty[$PID] : [];
+                    $arProperty[$PID] = ArrayHelper::merge($arProperty[$PID], $this->setPropertyValues($properties[$PID], array_unique($seasons)));
                 }
             }
         }
@@ -475,7 +504,11 @@ class Import extends Model
      */
     public static function getFiles()
     {
-        $files = FileHelper::findFiles(Yii::getAlias(static::$filePath));
+        $files = FileHelper::findFiles(Yii::getAlias(static::$filePath), [
+            'only' => [
+                '*.xml',
+            ],
+        ]);
         sort($files);
         return $files;
     }
@@ -575,7 +608,7 @@ class Import extends Model
                 'link_reference_id' => 8,
                 'multiple'          => 1,
             ],
-            'yml_current_material' => [
+            'yml_current_material'  => [
                 'name'              => 'Исходный материал',
                 'type'              => 'LE',
                 'code'              => 'current_material',
@@ -583,12 +616,42 @@ class Import extends Model
                 'link_reference_id' => 9,
                 'multiple'          => 1,
             ],
-            'yml_material'         => [
+            'yml_material'          => [
                 'name'              => 'Maтериал',
                 'type'              => 'LS',
                 'code'              => 'material',
                 'xml_id'            => 'yml_material',
                 'link_reference_id' => 9,
+                'multiple'          => 1,
+            ],
+            'yml_current_gender'    => [
+                'name'              => 'Исходный пол',
+                'type'              => 'LE',
+                'code'              => 'current_gender',
+                'xml_id'            => 'yml_current_gender',
+                'link_reference_id' => 10,
+            ],
+            'yml_gender'            => [
+                'name'              => 'Пол',
+                'type'              => 'LS',
+                'code'              => 'gender',
+                'xml_id'            => 'yml_gender',
+                'link_reference_id' => 10,
+            ],
+            'yml_current_seazon'  => [
+                'name'              => 'Исходный сезон',
+                'type'              => 'LE',
+                'code'              => 'current_seazon',
+                'xml_id'            => 'yml_current_seazon',
+                'link_reference_id' => 11,
+                'multiple'          => 1,
+            ],
+            'yml_seazon'          => [
+                'name'              => 'Сезон',
+                'type'              => 'LS',
+                'code'              => 'seazon',
+                'xml_id'            => 'yml_seazon',
+                'link_reference_id' => 11,
                 'multiple'          => 1,
             ],
         ];

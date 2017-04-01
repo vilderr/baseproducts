@@ -26,13 +26,13 @@ $config = [
     ],
     */
     'components'   => [
-        'request' => [
-            'cookieValidationKey'  => 'VODh2qVud2MB7kT8Hj0P9WS_IQPQpiON',
+        'request'      => [
+            'cookieValidationKey' => 'VODh2qVud2MB7kT8Hj0P9WS_IQPQpiON',
         ],
         'assetManager' => [
             'forceCopy' => YII_ENV_DEV ? true : false,
-            'bundles' => [
-                'yii\web\JqueryAsset' => [
+            'bundles'   => [
+                'yii\web\JqueryAsset'          => [
                     'js' => [YII_DEBUG ? 'jquery.js' : 'jquery.min.js'],
                 ],
                 'yii\bootstrap\BootstrapAsset' => [
@@ -46,7 +46,7 @@ $config = [
         'user'         => [
             'identityClass'   => 'app\models\user\User',
             'enableAutoLogin' => true,
-            'loginUrl' => '/sign/in'
+            'loginUrl'        => '/sign/in',
         ],
         'authManager'  => [
             'class' => 'app\models\user\AuthManager',
@@ -64,11 +64,11 @@ $config = [
                 [
                     'class'  => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
-                ]
+                ],
             ],
         ],
         'db'           => require(__DIR__ . '/db.php'),
-        'urlManager' => [
+        'urlManager'   => [
             'enablePrettyUrl' => true,
             'showScriptName'  => false,
             'rules'           => [
@@ -90,7 +90,7 @@ $config = [
                 ],
             ],
         ],
-        'i18n' => [
+        'i18n'         => [
             'translations' => [
                 '*' => [
                     'class'    => 'yii\i18n\PhpMessageSource',
@@ -104,9 +104,9 @@ $config = [
                 ],
             ],
         ],
-        'session' => [
+        'session'      => [
             'class' => 'yii\web\DbSession',
-        ]
+        ],
     ],
     'params'       => $params,
 ];

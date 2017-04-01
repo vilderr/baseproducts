@@ -123,7 +123,7 @@ trait ImportTrait
                     }
                 }
             } else {
-
+                $arErrors[] = 'Папка с фидами пуста!';
             }
 
             foreach ($arErrors as $strError) {
@@ -207,6 +207,8 @@ trait ImportTrait
                         echo '<script>EndImport();</script>';
                     }
                 }
+            } elseif (empty($NS['FILES'])) {
+                echo '<script>EndImport();</script>';
             } else {
                 unlink($NS['FILES'][0]);
                 array_shift($NS['FILES']);

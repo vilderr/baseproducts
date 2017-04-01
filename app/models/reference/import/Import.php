@@ -329,7 +329,7 @@ class Import extends Model
                         }
                     }
                     $PID = $this->properties['yml_material']->id;
-                    $arProperty[$PID] = $this->setPropertyValues($properties['$PID'], array_unique($materails));
+                    $arProperty[$PID] = $this->setPropertyValues($properties[$PID], array_unique($materails));
                 }
             }
         }

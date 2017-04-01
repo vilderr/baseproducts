@@ -152,7 +152,12 @@ class Import extends Model
                     $attributes['available'] = 'true';
 
                 if ($attributes['available'] == 'true') {
-                    $arYMLElement = ArrayHelper::getColumn(YmlTree::find()->select(['name', 'value', 'attrs'])->where(['parent_id' => $parent->id])->indexBy('name')->asArray()->all(), 'value');
+                    $arYMLElement = [];
+                    $arYML = ArrayHelper::getColumn(YmlTree::find()->select(['name', 'value', 'attrs'])->where(['parent_id' => $parent->id])->indexBy('name')->asArray()->all(), 'value');
+                    foreach ($arYML as $name => $value) {
+                        $arYMLElement[strtolower($name)] = $value;
+                    }
+
                     $arYMLElement['id'] = $attributes['id'];
 
                     /**
@@ -291,6 +296,8 @@ class Import extends Model
 
         //устанавливаем свойства товара
         if (array_key_exists('param', $arYMLElement)) {
+            $curParams = [];
+            $intKey = 0;
             $params = YmlTree::find()->select(['value', 'attrs'])->where(['parent_id' => $parent->id, 'name' => 'param'])->orderBy('id')->all();
             foreach ($params as $param) {
                 $attributes = unserialize($param->attrs);
@@ -342,16 +349,12 @@ class Import extends Model
                     }
                     $PID = $this->properties['yml_gender']->id;
                     $arProperty[$PID] = $this->setPropertyValues($properties[$PID], $genders);
-                }
-                elseif (ArrayHelper::isIn(strtolower($attributes['name']), [Yii::t('app/ymlimport', 'yml_prop_season'), Yii::t('app/ymlimport', 'yml_prop_season_ext')]))
-                {
+                } elseif (ArrayHelper::isIn(strtolower($attributes['name']), [Yii::t('app/ymlimport', 'yml_prop_season'), Yii::t('app/ymlimport', 'yml_prop_season_ext')])) {
                     $arSesons = explode(',', $param->value);
                     $seasons = [];
-                    foreach ($arSesons as $strSeason)
-                    {
+                    foreach ($arSesons as $strSeason) {
                         $season = $this->checkPropertyValue($this->properties['yml_current_seazon'], trim($strSeason));
-                        if ($season && $season->reference_section_id > 0)
-                        {
+                        if ($season && $season->reference_section_id > 0) {
                             $seasons[] = $season->reference_section_id;
                         }
                     }
@@ -359,7 +362,14 @@ class Import extends Model
                     $PID = $this->properties['yml_seazon']->id;
                     $arProperty[$PID] = (isset($arProperty[$PID])) ? $arProperty[$PID] : [];
                     $arProperty[$PID] = ArrayHelper::merge($arProperty[$PID], $this->setPropertyValues($properties[$PID], array_unique($seasons)));
+                } else {
+                    $curParams[$intKey] = $attributes['name'] . ': ' . $param->value;
+                    $intKey++;
                 }
+            }
+
+            if ($first_item && !empty($curParams)) {
+                $arElement['current_props'] = implode(' | ', $curParams);
             }
         }
 
@@ -638,7 +648,7 @@ class Import extends Model
                 'xml_id'            => 'yml_gender',
                 'link_reference_id' => 10,
             ],
-            'yml_current_seazon'  => [
+            'yml_current_seazon'    => [
                 'name'              => 'Исходный сезон',
                 'type'              => 'LE',
                 'code'              => 'current_seazon',
@@ -646,7 +656,7 @@ class Import extends Model
                 'link_reference_id' => 11,
                 'multiple'          => 1,
             ],
-            'yml_seazon'          => [
+            'yml_seazon'            => [
                 'name'              => 'Сезон',
                 'type'              => 'LS',
                 'code'              => 'seazon',

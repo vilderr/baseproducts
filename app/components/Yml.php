@@ -11,6 +11,7 @@ namespace app\components;
 use Yii;
 use yii\base\Model;
 use app\models\reference\import\YmlTree;
+use yii\helpers\Html;
 
 /**
  * Class Yml
@@ -367,7 +368,7 @@ class Yml extends Model
             ];
 
             if ($DBelementValue !== false) {
-                $arFields["value"] = $DBelementValue;
+                $arFields["value"] = Html::encode($DBelementValue);
             }
             if ($DBelementAttrs !== false) {
                 $arFields["attrs"] = $DBelementAttrs;

@@ -12,7 +12,7 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Url;
 
-$this->title = Yii::t('app', 'admin-panel-title');
+$this->title = Yii::t('app', 'Login Form');
 ?>
 <div class="container">
     <div id="wrapper" class="col-md-4 col-md-offset-4 vertical-align-parent">

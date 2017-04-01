@@ -275,7 +275,7 @@ class Import extends Model
             if (array_key_exists('price', $arYMLElement) && intval($arYMLElement['price']) > 0) {
                 $arElement['price'] = intval($arYMLElement['price']);
 
-                if (array_key_exists('oldprice', $arYMLElement)) {
+                if (array_key_exists('oldprice', $arYMLElement) && intval($arYMLElement['oldprice']) > 0) {
                     $arElement['oldprice'] = intval($arYMLElement['oldprice']);
 
                     if ($arElement['oldprice'] > 0) {

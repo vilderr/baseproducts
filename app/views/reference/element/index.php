@@ -44,6 +44,12 @@ $this->params['breadcrumbs'][] = ['label' => $section->name];
         ],
         'columns'      => [
             [
+                'class'   => \yii\grid\CheckboxColumn::className(),
+                'options' => [
+                    'width' => '50px',
+                ],
+            ],
+            [
                 'attribute' => 'id',
                 'options'   => [
                     'width' => '85px',
@@ -57,9 +63,9 @@ $this->params['breadcrumbs'][] = ['label' => $section->name];
                 },
             ],
             [
-                'attribute' => 'active',
-                'filter'    => [0 => Yii::t('app/reference', 'filter-active-yes'), 1 => Yii::t('app/reference', 'filter-active-no')],
-                'format'    => 'boolean',
+                'attribute'      => 'active',
+                'filter'         => [0 => Yii::t('app/reference', 'filter-active-yes'), 1 => Yii::t('app/reference', 'filter-active-no')],
+                'format'         => 'boolean',
                 'contentOptions' => [
                     'class' => 'text-center',
                 ],
@@ -68,7 +74,7 @@ $this->params['breadcrumbs'][] = ['label' => $section->name];
                 ],
             ],
             [
-                'attribute' => 'sort',
+                'attribute'      => 'sort',
                 'contentOptions' => [
                     'class' => 'text-center',
                 ],
@@ -78,13 +84,13 @@ $this->params['breadcrumbs'][] = ['label' => $section->name];
             ],
             [
                 'attribute' => 'price',
-                'options'        => [
+                'options'   => [
                     'width' => '110px',
                 ],
             ],
             [
                 'attribute' => 'discount',
-                'options'        => [
+                'options'   => [
                     'width' => '110px',
                 ],
             ],
@@ -104,5 +110,5 @@ $this->params['breadcrumbs'][] = ['label' => $section->name];
                 ],
             ],
         ],
-    ]);?>
+    ]); ?>
 </div>

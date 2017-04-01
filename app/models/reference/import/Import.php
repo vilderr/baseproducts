@@ -8,6 +8,7 @@
 
 namespace app\models\reference\import;
 
+use app\models\reference\ReferenceSection;
 use Yii;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
@@ -271,7 +272,7 @@ class Import extends Model
             if (array_key_exists('vendor', $arYMLElement))
                 $arElement['brand'] = $arYMLElement['vendor'];
 
-            if (array_key_exists('price', $arYMLElement)) {
+            if (array_key_exists('price', $arYMLElement) && intval($arYMLElement['price']) > 0) {
                 $arElement['price'] = intval($arYMLElement['price']);
 
                 if (array_key_exists('oldprice', $arYMLElement)) {
@@ -291,6 +292,11 @@ class Import extends Model
                 $arElement['price'] = null;
                 $arElement['oldprice'] = null;
                 $arElement['discount'] = null;
+            }
+
+            if (!$arElement['price']) {
+                $arElement['reference_section_id'] = (ReferenceSection::find()->limit(1)->where(['reference_id' => $this->reference->id, 'code' => 'without_price'])->one())->id;
+                $arElement['active'] = 0;
             }
         }
 

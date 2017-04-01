@@ -111,7 +111,8 @@ trait SectionTrait
                     $section->prependTo($parent);
                 }
             } else {
-                $section->makeRoot();
+                if ($section->isNewRecord)
+                    $section->makeRoot();
             }
 
             if ($section->save(false)) {

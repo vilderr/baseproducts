@@ -80,6 +80,7 @@ return [
     'Brand'                              => 'Бренд',
     'Import Marker'                      => 'Метка импорта',
     'Reference Import'                   => 'Импорт товаров',
+    'Service Properety'                  => 'Служебное',
 
     //hints
     'is-catalog-hint'                    => 'Является ли справочник каталогом товаров?',

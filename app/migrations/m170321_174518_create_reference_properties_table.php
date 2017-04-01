@@ -23,6 +23,7 @@ class m170321_174518_create_reference_properties_table extends Migration
             'link_reference_id' => $this->integer(11),
             'multiple'          => $this->smallInteger(1)->notNull()->defaultValue(0),
             'code'              => $this->string(255),
+            'service'           => $this->smallInteger(1)->notNull()->defaultValue(0),
         ]);
 
         $this->createIndex('idx_reference_property_reference_id', '{{%reference_property}}', 'reference_id');

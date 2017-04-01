@@ -35,9 +35,15 @@ use yii\widgets\ActiveForm;
                 <?= $form->field($model, 'section_id')->dropDownList($section->getTree()); ?>
                 <?= $form->field($model, 'subsections')->checkbox(); ?>
                 <?= $form->field($model, 'active')->checkbox(); ?>
-                <?= $form->field($model, 'shop')->textInput(['maxlength' => true]); ?>
+                <?
+                if ($reference->catalog) {
+                    echo $form->field($model, 'shop')->textInput(['maxlength' => true]);
+                }
+                ?>
                 <? foreach ($reference->properties as $PID => $property): ?>
-                    <?= $form->field($model, 'property[' . $PID . ']')->label($property->name); ?>
+                    <? if (!$property->service): ?>
+                        <?= $form->field($model, 'property[' . $PID . ']')->label($property->name); ?>
+                    <? endif; ?>
                 <? endforeach; ?>
             </div>
             <div class="panel-footer">

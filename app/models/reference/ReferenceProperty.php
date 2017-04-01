@@ -17,6 +17,7 @@ use Yii;
  * @property integer $link_reference_id
  * @property integer $multiple
  * @property string $code
+ * @property integer $service
  *
  * @property ReferenceElementProperty[] $referenceElementProperties
  * @property Reference $reference
@@ -49,7 +50,7 @@ class ReferenceProperty extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['reference_id', 'sort', 'link_reference_id', 'active', 'multiple'], 'integer'],
+            [['reference_id', 'sort', 'link_reference_id', 'active', 'multiple', 'service'], 'integer'],
             [['name', 'xml_id', 'code'], 'string', 'max' => 255],
             [['type'], 'string', 'max' => 2],
             [['xml_id', 'code'], 'unique'],
@@ -73,6 +74,7 @@ class ReferenceProperty extends \yii\db\ActiveRecord
             'link_reference_id' => Yii::t('app/reference', 'Link Reference ID'),
             'multiple'          => Yii::t('app/reference', 'Multiple'),
             'code'              => Yii::t('app/reference', 'Code'),
+            'service'           => Yii::t('app/reference', 'Service Properety'),
             'delete'            => Yii::t('app/reference', 'Delete'),
         ];
     }

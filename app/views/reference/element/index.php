@@ -60,10 +60,34 @@ $this->params['breadcrumbs'][] = ['label' => $section->name];
                 'attribute' => 'active',
                 'filter'    => [0 => Yii::t('app/reference', 'filter-active-yes'), 1 => Yii::t('app/reference', 'filter-active-no')],
                 'format'    => 'boolean',
+                'contentOptions' => [
+                    'class' => 'text-center',
+                ],
+                'options'        => [
+                    'width' => '100px',
+                ],
             ],
-            'sort',
-            'price',
-            'discount',
+            [
+                'attribute' => 'sort',
+                'contentOptions' => [
+                    'class' => 'text-center',
+                ],
+                'options'        => [
+                    'width' => '105px',
+                ],
+            ],
+            [
+                'attribute' => 'price',
+                'options'        => [
+                    'width' => '110px',
+                ],
+            ],
+            [
+                'attribute' => 'discount',
+                'options'        => [
+                    'width' => '110px',
+                ],
+            ],
             [
                 'class'          => 'yii\grid\ActionColumn',
                 'contentOptions' => [

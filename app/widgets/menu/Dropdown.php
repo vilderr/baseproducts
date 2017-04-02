@@ -14,7 +14,7 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\base\InvalidConfigException;
 
-class DropDown extends Widget
+class Dropdown extends Widget
 {
     /**
      * @var array the HTML attributes for the widget container tag.

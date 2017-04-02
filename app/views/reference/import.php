@@ -15,7 +15,7 @@ use app\assets\reference\ImportAsset;
 
 ImportAsset::register($this);
 
-$this->title = 'Импорт элементов из YML файла';
+$this->title = Yii::t('app/ymlimport', 'Import from YML-file');
 $this->params['breadcrumbs'][] = ['label' => $reference->name, 'url' => ['/reference/section', 'type' => $reference->reference_type_id, 'reference_id' => $reference->id]];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app/reference', 'Reference Import')];
 ?>
@@ -28,5 +28,3 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app/reference', 'Reference 
     <?= Html::a('Остановить', null, ['class' => 'btn btn-default', 'id' => 'stop_button', 'onclick' => 'EndImport();']); ?>
     <?= Html::endForm(); ?>
 </div>
-<br>
-<p class="bg-warning text-warning small notify">Поля выделенные жирным, обязательны для заполнения</p>

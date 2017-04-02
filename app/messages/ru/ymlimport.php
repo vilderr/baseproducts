@@ -18,4 +18,6 @@ return [
     'yml_prop_gender_lat'    => 'gender',
     'yml_prop_season'        => 'сезон',
     'yml_prop_season_ext'    => 'сезонность',
+
+    'Import from YML-file' => 'Импорт элементов из YML файла',
 ];

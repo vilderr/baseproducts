@@ -7,15 +7,16 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use app\components\Controller;
 use app\models\reference\Reference;
 use app\models\reference\ReferenceType;
 use app\models\reference\ReferenceSection;
 use app\models\reference\ReferenceProperty;
 use app\models\reference\search\ReferenceSearch;
-use app\components\Controller;
 use app\controllers\reference\SectionTrait;
 use app\controllers\reference\ElementTrait;
 use app\controllers\reference\ImportTrait;
+use app\controllers\reference\DistributionTrait;
 
 /**
  * ReferenceController implements the CRUD actions for Reference model.
@@ -25,6 +26,7 @@ class ReferenceController extends Controller
     use SectionTrait;
     use ElementTrait;
     use ImportTrait;
+    use DistributionTrait;
 
     /**
      * @inheritdoc

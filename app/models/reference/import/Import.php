@@ -8,7 +8,6 @@
 
 namespace app\models\reference\import;
 
-use app\models\reference\ReferenceSection;
 use Yii;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
@@ -17,6 +16,7 @@ use app\components\helpers\Utils;
 use app\components\helpers\FileHelper;
 use app\models\reference\Reference;
 use app\models\reference\ReferenceElement;
+use app\models\reference\ReferenceSection;
 use app\models\reference\ReferenceProperty;
 use app\models\reference\ReferenceElementProperty;
 
@@ -275,7 +275,10 @@ class Import extends Model
             if (array_key_exists('price', $arYMLElement) && intval($arYMLElement['price']) > 0) {
                 $arElement['price'] = intval($arYMLElement['price']);
 
-                if (array_key_exists('oldprice', $arYMLElement) && intval($arYMLElement['oldprice']) > 0) {
+                if (array_key_exists('oldprice', $arYMLElement)
+                    && (intval($arYMLElement['oldprice']) > 0)
+                    && ($arElement['price'] < intval($arYMLElement['oldprice']))
+                ) {
                     $arElement['oldprice'] = intval($arYMLElement['oldprice']);
 
                     if ($arElement['oldprice'] > 0) {

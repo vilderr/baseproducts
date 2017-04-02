@@ -15,3 +15,4 @@
 <?= $form->field($element, 'oldprice')->textInput(); ?>
 <?= $form->field($element, 'discount')->textInput(); ?>
 <?= $form->field($element, 'currency')->textInput(); ?>
+<?= $form->field($element, 'current_props')->textarea(); ?>

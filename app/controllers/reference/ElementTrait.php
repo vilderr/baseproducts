@@ -9,11 +9,11 @@
 namespace app\controllers\reference;
 
 use app\models\reference\ReferenceElementProperty;
-use app\models\reference\ReferenceProperty;
 use Yii;
 use app\models\reference\ReferenceElement;
 use app\models\reference\ReferenceSection;
 use app\models\reference\search\ReferenceElementSearch;
+use yii\bootstrap\Html;
 use yii\web\NotFoundHttpException;
 
 trait ElementTrait
@@ -30,6 +30,26 @@ trait ElementTrait
 
         $reference = $this->findReferenceByType($type, $reference_id);
         $section = $this->findSection($reference->id, $reference_section_id);
+
+        if (Yii::$app->request->isAjax && Yii::$app->request->post('LOAD_TREE') == 'Y') {
+            return Html::dropDownList('section_id', 0, $section->getTree(), ['class' => 'form-control']) . "&nbsp";
+        }
+
+        if (Yii::$app->request->isPost && Yii::$app->request->post('group-action') == 'Y') {
+            $action = Yii::$app->request->post('action');
+            $attributes = [];
+            switch ($action) {
+                case 'DEA':
+                case 'ACT':
+                    $attributes = ['active' => $action == 'ACT' ? 1 : 0];
+                    break;
+                case 'MOV':
+                    $attributes = ['reference_section_id' => Yii::$app->request->post('section_id')];
+                    break;
+            }
+
+            ReferenceElement::updateAll($attributes, ['reference_id' => $reference->id, 'id' => Yii::$app->request->post('selection')]);
+        }
 
         $searchModel = new ReferenceElementSearch(['reference' => $reference, 'section_id' => $section->id]);
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -114,7 +134,6 @@ trait ElementTrait
         $arProperty = [];
 
 
-
         if ($element->load(Yii::$app->request->post()) && $element->validate()) {
             if (Yii::$app->request->post('ReferenceElementProperty') !== null) {
                 $data = Yii::$app->request->post('ReferenceElementProperty');
@@ -165,8 +184,7 @@ trait ElementTrait
         $reference = $this->findReferenceByType($type, $reference_id);
         $element = $this->findElement($reference->id, $id);
 
-        if ($element->delete())
-        {
+        if ($element->delete()) {
             return $this->redirect(['element', 'type' => $element->reference->reference_type_id, 'reference_id' => $element->reference->id, 'reference_section_id' => $element->reference_section_id]);
         }
     }

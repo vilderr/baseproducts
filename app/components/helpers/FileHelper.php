@@ -16,17 +16,14 @@ class FileHelper extends \yii\helpers\FileHelper
 {
     /**
      * @param $path
-     * @return mixed|string
+     * @return mixed
      */
     public static function getFileName($path)
     {
-        $path = rtrim($path, '\0.\\/+ ');
-        $path = str_replace('\\', '/', $path);
-        $path = rtrim($path, '/');
-
-        $p = strrpos($path, '/');
-        if ($p !== false)
-            return substr($path, $p + 1);
+        $arPath = explode('/', $path);
+        if (count($arPath) > 0) {
+            return array_pop($arPath);
+        }
 
         return $path;
     }

@@ -8,3 +8,7 @@
  */
 
 $this->title = Yii::t('app', 'Admin Panel');
+
+$sect = \app\models\reference\ReferenceType::getReferenceMenu();
+
+echo '<pre>'; print_r($sect); echo '</pre>';

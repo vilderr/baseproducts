@@ -13,6 +13,7 @@ use Yii;
 use app\models\reference\ReferenceElement;
 use app\models\reference\ReferenceSection;
 use app\models\reference\search\ReferenceElementSearch;
+use yii\bootstrap\Dropdown;
 use yii\bootstrap\Html;
 use yii\web\NotFoundHttpException;
 

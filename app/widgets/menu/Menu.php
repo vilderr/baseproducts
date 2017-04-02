@@ -62,18 +62,17 @@ class Menu extends Widget
             $this->dropDownCaret = Html::tag('i', '', ['class' => 'fa fa-angle-down']);
         }
 
-        if($this->direction === null)
-        {
+        if ($this->direction === null) {
             $this->direction = 'vertical';
         }
 
-        Html::addCssClass($this->options, ['widget' => 'main-nav '.$this->direction]);
+        Html::addCssClass($this->options, ['widget' => 'main-nav ' . $this->direction]);
     }
 
     public function run()
     {
         MenuAsset::register($this->getView());
-        
+
         return $this->renderItems();
     }
 
@@ -83,14 +82,13 @@ class Menu extends Widget
     public function renderItems()
     {
         $items = [];
-        foreach ($this->items as $i => $item)
-        {
-            if(isset($item['visisble']) && !$item['visible'])
+        foreach ($this->items as $i => $item) {
+            if (isset($item['visisble']) && !$item['visible'])
                 continue;
 
             $items[] = $this->renderItem($item);
         }
-        
+
         return Html::tag('ul', implode("\n", $items), $this->options);
     }
 
@@ -115,12 +113,9 @@ class Menu extends Widget
             $active = $this->isItemActive($item);
         }
 
-        if (empty($items))
-        {
+        if (empty($items)) {
             $items = '';
-        }
-        else
-        {
+        } else {
             Html::addCssClass($options, ['widget' => 'drop-down']);
             Html::addCssClass($linkOptions, ['widget' => 'drop-down-toggle']);
 
@@ -151,10 +146,10 @@ class Menu extends Widget
     protected function renderDropdown($items, $parentItem)
     {
         return Dropdown::widget([
-            'options' => ArrayHelper::getValue($parentItem, 'dropDownOptions', []),
-            'items' => $items,
+            'options'      => ArrayHelper::getValue($parentItem, 'dropDownOptions', []),
+            'items'        => $items,
             'encodeLabels' => $this->encodeLabels,
-            'view' => $this->getView(),
+            'view'         => $this->getView(),
         ]);
     }
 

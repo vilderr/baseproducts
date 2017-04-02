@@ -239,6 +239,14 @@ html {
     margin-bottom: 10px;
 }
 
+/*--------------- FOOTER ----------------*/
+
+#admin-body .footer {
+    background: #1d212a;
+    color: #B3B8C3;
+    padding: 20px;
+}
+
 /*--------------- HELPERS ---------------*/
 .confirm-delete {
     color: #a94442 !important;

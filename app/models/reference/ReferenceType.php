@@ -4,6 +4,7 @@ namespace app\models\reference;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\Url;
 
 /**
  * This is the model class for table "reference_type".
@@ -60,10 +61,25 @@ class ReferenceType extends \yii\db\ActiveRecord
         ];
     }
 
+    public static function getReferenceMenu()
+    {
+        $items = [];
+        $tree = self::find()->with('reference')->all();
+
+        foreach ($tree as $type) {
+            $items[] = [
+                'label' => $type->name,
+                'url'   => ['reference/index', 'type' => $type->id],
+            ];
+        }
+
+        return $items;
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getReferences()
+    public function getReference()
     {
         return $this->hasMany(Reference::className(), ['reference_type_id' => 'id']);
     }

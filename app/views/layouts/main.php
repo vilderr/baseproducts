@@ -43,16 +43,8 @@ AppAsset::register($this);
                         'id'    => 'admin-menu',
                         'items' => [
                             [
-                                'label' => 'Каталог товаров',
-                                'url'   => Url::to(['/reference', 'type' => 'catalog']),
-                            ],
-                            [
-                                'label' => 'Свойства товаров',
-                                'url'   => Url::to(['/reference', 'type' => 'props']),
-                            ],
-                            [
-                                'label' => 'Импорт товаров',
-                                'url'   => Url::to(['/reference/import', 'type' => 'catalog', 'reference_id' => 3]),
+                                'label' => 'Справочники',
+                                'items' => \app\models\reference\ReferenceType::getReferenceMenu(),
                             ],
                             [
                                 'label' => 'Типы справочников',
@@ -77,6 +69,7 @@ AppAsset::register($this);
                 </div>
             </div>
         </div>
+        <div class="footer"></div>
     </div>
 </div>
 <?php $this->endBody() ?>

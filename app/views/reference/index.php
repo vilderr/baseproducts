@@ -13,7 +13,9 @@ $this->title = $referenceType->name . ': ' . Yii::t('app/reference', 'References
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="reference-index">
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?
+    //echo Yii::$app->controller->getRoute();
+    ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -40,6 +42,21 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format'    => 'boolean',
             ],
             'sort',
+            [
+                'format'  => 'raw',
+                'value'   => function ($model) use ($referenceType) {
+                    $html = '';
+                    if ($model->catalog) {
+                        $html .= Html::a('Импорт', ['reference/import', 'type' => $referenceType->id, 'reference_id' => $model->id]).'&nbsp;|&nbsp;';
+                    }
+
+                    $html .= Html::a('Распределение', ['reference/distribution', 'type' => $referenceType->id, 'reference_id' => $model->id]);
+                    return $html;
+                },
+                'contentOptions' => [
+                    'class' => 'text-center',
+                ],
+            ],
         ],
     ]); ?>
 </div>

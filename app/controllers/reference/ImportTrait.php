@@ -192,6 +192,10 @@ trait ImportTrait
                     echo '<script>DoNext(' . Json::encode(['NS' => $NS]) . ')</script>';
 
                 } else {
+                    $NS['INFO'][] = [
+                        'FILE'   => FileHelper::getFileName($NS['FILES'][0]),
+                        'RESULT' => 'Удачно',
+                    ];
                     unlink($NS['FILES'][0]);
                     array_shift($NS['FILES']);
                     if (count($NS['FILES']) > 0) {
@@ -199,17 +203,28 @@ trait ImportTrait
                             'STEP'         => 0,
                             'REFERENCE_ID' => $reference->id,
                             'FILES'        => $NS['FILES'],
+                            'INFO'         => $NS['INFO'],
                         ];
 
                         echo '<script>DoNext(' . Json::encode(['NS' => $NS]) . ')</script>';
                     } else {
-                        echo '<p class="bg-info text-info small notify"><b>Импорт успешно завершен</b></p>';
+                        echo '<p class="bg-info text-info small notify"><b>Импорт завершен</b><br><br>';
+
+                        foreach ($NS['INFO'] as $message) {
+                            echo '<span><label>' . $message['FILE'] . ':</label> ' . $message['RESULT'] . '</span><br>';
+                        }
+
+                        echo '</p>';
                         echo '<script>EndImport();</script>';
                     }
                 }
             } elseif (empty($NS['FILES'])) {
                 echo '<script>EndImport();</script>';
             } else {
+                $NS['INFO'][] = [
+                    'FILE'   => FileHelper::getFileName($NS['FILES'][0]),
+                    'RESULT' => 'Ошибка!!!',
+                ];
                 unlink($NS['FILES'][0]);
                 array_shift($NS['FILES']);
                 if (count($NS['FILES']) > 0) {
@@ -217,11 +232,18 @@ trait ImportTrait
                         'STEP'         => 0,
                         'REFERENCE_ID' => $reference->id,
                         'FILES'        => $NS['FILES'],
+                        'INFO'         => $NS['INFO'],
                     ];
 
                     echo '<script>DoNext(' . Json::encode(['NS' => $NS]) . ')</script>';
                 } else {
-                    echo '<p class="bg-info text-info small notify"><b>Импорт успешно завершен</b></p>';
+                    echo '<p class="bg-info text-info small notify"><b>Импорт завершен</b><br><br>';
+
+                    foreach ($NS['INFO'] as $message) {
+                        echo '<span><label>' . $message['FILE'] . ':</label> ' . $message['RESULT'] . '</span><br>';
+                    }
+
+                    echo '</p>';
                     echo '<script>EndImport();</script>';
                 }
             }

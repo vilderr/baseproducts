@@ -16,7 +16,6 @@ use app\models\reference\search\ReferenceSearch;
 use app\controllers\reference\SectionTrait;
 use app\controllers\reference\ElementTrait;
 use app\controllers\reference\ImportTrait;
-use app\controllers\reference\DistributionTrait;
 
 /**
  * ReferenceController implements the CRUD actions for Reference model.
@@ -26,7 +25,6 @@ class ReferenceController extends Controller
     use SectionTrait;
     use ElementTrait;
     use ImportTrait;
-    use DistributionTrait;
 
     /**
      * @inheritdoc

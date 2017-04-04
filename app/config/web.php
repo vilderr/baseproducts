@@ -13,18 +13,6 @@ $config = [
     'runtimePath'  => $webroot . '/runtime',
     'vendorPath'   => $webroot . '/vendor',
     'defaultRoute' => 'default',
-    /*
-    'modules'      => [
-        'admin' => [
-            'class'   => 'app\modules\admin\Module',
-            'modules' => [
-                'references' => [
-                    'class' => 'app\modules\admin\modules\references\Module',
-                ],
-            ],
-        ],
-    ],
-    */
     'components'   => [
         'request'      => [
             'cookieValidationKey' => 'VODh2qVud2MB7kT8Hj0P9WS_IQPQpiON',
@@ -96,10 +84,11 @@ $config = [
                     'class'    => 'yii\i18n\PhpMessageSource',
                     'basePath' => '@app/messages',
                     'fileMap'  => [
-                        'app'           => 'app.php',
-                        'app/user'      => 'user.php',
-                        'app/reference' => 'reference.php',
-                        'app/ymlimport' => 'ymlimport.php',
+                        'app'              => 'app.php',
+                        'app/user'         => 'user.php',
+                        'app/reference'    => 'reference.php',
+                        'app/ymlimport'    => 'ymlimport.php',
+                        'app/distribution' => 'distribution.php',
                     ],
                 ],
             ],

@@ -1,0 +1,13 @@
+.distribution-part .conditions .panel-title {
+    margin-bottom: 10px;
+}
+
+.distribution-part .line {
+    margin: 5px 0;
+    padding:5px;
+}
+
+.distribution-part .conditions .line:nth-child(odd),
+.distribution-part .actions .line:nth-child(odd){
+    background: #f9f9f9;
+}

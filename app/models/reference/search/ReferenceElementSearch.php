@@ -118,7 +118,7 @@ class ReferenceElementSearch extends ReferenceElement
         ]);
 
         if ($this->name) {
-            $query->andFilterWhere(['or like', 'reference_element.name', explode(' ', trim($this->name))]);
+            $query->andFilterWhere(['or like', 'reference_element.name', explode(' ', $this->name)]);
         }
 
         $query->andFilterWhere(['like', 'reference_element.code', $this->code])

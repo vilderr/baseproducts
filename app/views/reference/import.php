@@ -16,6 +16,7 @@ use app\assets\reference\ImportAsset;
 ImportAsset::register($this);
 
 $this->title = Yii::t('app/ymlimport', 'Import from YML-file');
+$this->params['breadcrumbs'][] = ['label' => $reference->referenceType->name, 'url' => ['/reference', 'type' => $reference->referenceType->id]];
 $this->params['breadcrumbs'][] = ['label' => $reference->name, 'url' => ['/reference/section', 'type' => $reference->reference_type_id, 'reference_id' => $reference->id]];
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app/reference', 'Reference Import')];
 ?>

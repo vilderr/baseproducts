@@ -189,4 +189,13 @@ class Reference extends \yii\db\ActiveRecord
         }
         return $result;
     }
+
+    /**
+     * @return array
+     */
+    public function getSectionTree()
+    {
+        $model = new ReferenceSection(['reference_id' => $this->id]);
+        return $model->getTree();
+    }
 }

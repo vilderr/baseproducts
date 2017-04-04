@@ -13,10 +13,6 @@ $this->title = $referenceType->name . ': ' . Yii::t('app/reference', 'References
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="reference-index">
-    <?
-    //echo Yii::$app->controller->getRoute();
-    ?>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'layout'       => '{items}{summary}{pager}',
@@ -50,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         $html .= Html::a('Импорт', ['reference/import', 'type' => $referenceType->id, 'reference_id' => $model->id]).'&nbsp;|&nbsp;';
                     }
 
-                    $html .= Html::a('Распределение', ['reference/distribution', 'type' => $referenceType->id, 'reference_id' => $model->id]);
+                    $html .= Html::a('Распределение', ['/distribution', 'type' => $referenceType->id, 'reference_id' => $model->id]);
                     return $html;
                 },
                 'contentOptions' => [

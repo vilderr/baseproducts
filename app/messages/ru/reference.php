@@ -79,7 +79,8 @@ return [
     'Import Hash'                        => 'Метка импорта',
     'Brand'                              => 'Бренд',
     'Import Marker'                      => 'Метка импорта',
-    'Reference Import'                   => 'Импорт товаров',
+    'Reference Import'                   => 'Импорт элементов',
+    'Reference Distribution'             => 'Распределение элементов',
     'Service Properety'                  => 'Служебное',
 
     //hints

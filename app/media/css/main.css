@@ -159,11 +159,11 @@ html {
 
 #admin-body .table td {
     font-size: 14px;
+    vertical-align: middle;
 }
 
 #admin-body .table td.control {
-    vertical-align: middle;
-    text-align: right;
+    text-align: center;
 }
 
 #admin-body .table td.status {

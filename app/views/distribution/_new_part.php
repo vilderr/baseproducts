@@ -16,11 +16,14 @@ use yii\helpers\Html;
 
 if ($model->isNewRecord) {
     $model->id = substr(md5(uniqid("", true)), 0, 5);
-    $data = [];
+    $data = [
+        'condition' => [],
+        'operation' => [],
+    ];
 } else {
     $data = unserialize($model->data);
 }
-
+//echo '<pre>'; print_r($data); echo '</pre>';
 $params = [
     'part'    => [
         'id' => $model->id,
@@ -75,10 +78,10 @@ $arJSParams = [
                 <?
                 foreach ($data['operation'] as $key => $value) {
                     echo $this->render('_action_line', [
-                        'model' => $model,
+                        'model'     => $model,
                         'reference' => $reference,
-                        'name'  => $key,
-                        'value' => $value,
+                        'name'      => $key,
+                        'value'     => $value,
                     ]);
                 }
                 ?>

@@ -7,8 +7,10 @@
  * @var $this yii\web\View
  */
 
+use app\models\distribution\Distribution;
+
 $this->title = Yii::t('app', 'Admin Panel');
 
-$sect = \app\models\reference\ReferenceType::getReferenceMenu();
+$model = Distribution::find()->limit(1)->where(['id' => 8])->with(['reference', 'activeParts'])->one();
 
-echo '<pre>'; print_r($sect); echo '</pre>';
+echo '<pre>'; print_r($model); echo '</pre>';

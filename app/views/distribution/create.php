@@ -5,6 +5,7 @@ use yii\helpers\Html;
  * @var $this yii\web\View
  * @var $model app\models\distribution\Distribution
  * @var $reference app\models\reference\Reference
+ * @var $parts app\models\distribution\DistributionPart[]
  */
 
 $this->title = Yii::t('app', '{reference}: Create Distribution', ['reference' => $reference->name]);
@@ -18,6 +19,7 @@ $this->params['breadcrumbs'][] = Yii::t('app', 'Create Distribution');
     <?= $this->render('_form', [
         'model'     => $model,
         'reference' => $reference,
+        'parts'     => $parts,
     ]) ?>
 
 </div>

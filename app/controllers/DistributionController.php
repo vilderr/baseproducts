@@ -4,7 +4,11 @@ namespace app\controllers;
 
 use app\models\distribution\DistributionPart;
 use app\models\distribution\DistributionSearch;
+use app\models\distribution\Parser;
 use Yii;
+use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\reference\Reference;
@@ -16,6 +20,9 @@ use app\models\distribution\Distribution;
  */
 class DistributionController extends \app\components\Controller
 {
+    /**
+     * @return array
+     */
     public function behaviors()
     {
         return [
@@ -28,6 +35,11 @@ class DistributionController extends \app\components\Controller
         ];
     }
 
+    /**
+     * @param $type
+     * @param $reference_id
+     * @return string
+     */
     public function actionIndex($type, $reference_id)
     {
         $reference = $this->findReferenceByType($type, $reference_id);
@@ -41,6 +53,11 @@ class DistributionController extends \app\components\Controller
         ]);
     }
 
+    /**
+     * @param $type
+     * @param $reference_id
+     * @return string|\yii\web\Response
+     */
     public function actionCreate($type, $reference_id)
     {
         $reference = $this->findReferenceByType($type, $reference_id);
@@ -50,15 +67,23 @@ class DistributionController extends \app\components\Controller
         $parts = [];
 
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
-
+            if (($partsPost = Yii::$app->request->post($partModel->formName())) === null) {
+                $partsPost = [];
+            }
             if ($model->save()) {
-                foreach (Yii::$app->request->post($partModel->formName()) as $ID => $arPart) {
+                foreach ($partsPost as $ID => $arPart) {
+                    if (!isset($arPart['data']['operation'])) {
+                        unset($partsPost[$ID]);
+                        continue;
+                    }
+
                     $part = new DistributionPart([
                         'active' => $arPart['active'],
                         'data'   => serialize($arPart['data']),
                     ]);
                     $part->link('distribution', $model);
                 }
+
                 return $this->redirect(['index', 'type' => $reference->referenceType->id, 'reference_id' => $model->reference_id]);
             }
         }
@@ -70,11 +95,51 @@ class DistributionController extends \app\components\Controller
         ]);
     }
 
+    /**
+     * @param $type
+     * @param $reference_id
+     * @param $id
+     * @return string|\yii\web\Response
+     */
     public function actionUpdate($type, $reference_id, $id)
     {
         $reference = $this->findReferenceByType($type, $reference_id);
         $model = $this->findModel($id);
+        $partModel = new DistributionPart();
         $parts = DistributionPart::find()->where(['distribution_id' => $model->id])->indexBy('id')->all();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if (($partsPost = Yii::$app->request->post($partModel->formName())) === null) {
+                $partsPost = [];
+            }
+
+            foreach ($partsPost as $ID => $arPart) {
+                if (!isset($arPart['data']['operation'])) {
+                    unset($partsPost[$ID]);
+                    continue;
+                }
+
+                if (ArrayHelper::keyExists($ID, $parts)) {
+                    $parts[$ID]->active = $arPart['active'];
+                    $parts[$ID]->data = serialize($arPart['data']);
+                } else {
+                    $parts[$ID] = new DistributionPart([
+                        'active' => $arPart['active'],
+                        'data'   => serialize($arPart['data']),
+                    ]);
+                }
+            }
+
+            foreach ($parts as $ID => $part) {
+                if (ArrayHelper::keyExists($ID, $partsPost)) {
+                    $part->link('distribution', $model);
+                } else {
+                    $part->unlink('distribution', $model, true);
+                }
+            }
+
+            return $this->redirect(['index', 'type' => $reference->referenceType->id, 'reference_id' => $reference->id]);
+        }
 
         return $this->render('update', [
             'reference' => $reference,
@@ -83,9 +148,53 @@ class DistributionController extends \app\components\Controller
         ]);
     }
 
-    public function actionProcess()
+    public function actionProcess($id, $run = false)
     {
+        $model = Distribution::find()->limit(1)->where(['id' => $id])->with(['reference', 'activeParts'])->one();
+        if ($model === null) {
+            throw new NotFoundHttpException('Страница не найдена');
+        }
+        $request = Yii::$app->request;
+        $arErrors = [];
 
+        if ($request->isPost && $run == 'Y') {
+            $post = $request->post();
+            $parser = new Parser();
+
+            if (isset($post['NS']) && is_array($post['NS'])) {
+                $NS = $post['NS'];
+            } else {
+                $NS = [
+                    'step'  => 0,
+                    'count' => count($model->activeParts),
+                    'id'    => $model->id,
+                ];
+            }
+
+            $start_time = time();
+            $parser->init($NS);
+
+            if ($NS['step'] < $NS['count']) {
+                echo '<p class="bg-primary text-primary small notify">Обрабатываю итерацию #' . ($NS['step'] + 1) . '</p>';
+                $counter = $parser->parseElements($NS['step'], $start_time);
+
+                if (!$counter) {
+                    $NS["step"]++;
+                    $NS["last_id"] = 0;
+                }
+                echo '<script>DoNext(' . $model->id . ',' . Json::encode(['NS' => $NS]) . ');</script>';
+            } else {
+                echo '<p class="bg-primary text-primary small notify">Парсинг завершен</p>';
+                echo Html::a('Назад', ['index', 'type' => $model->reference->referenceType->id, 'reference_id' => $model->reference->id], ['class' => 'btn btn-default']);
+                echo '<script>EndDistribution();</script>';
+            }
+
+            Yii::$app->end();
+        }
+
+        return $this->render('process', [
+            'model' => $model,
+        ]);
     }
 
     /**
@@ -103,7 +212,9 @@ class DistributionController extends \app\components\Controller
         ]);
     }
 
-
+    /**
+     * @return array|string
+     */
     public function actionPartService()
     {
         $action = Yii::$app->request->post('action');

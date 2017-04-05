@@ -117,3 +117,32 @@
     };
 
 })(jQuery);
+
+var running = false;
+
+function DoNext(id, NS) {
+
+    var url = '/distribution/process?id=' + id
+        + '&run=Y';
+
+    if (running) {
+        var request = $.ajax({
+            url: url,
+            data: NS,
+            type: 'post'
+        });
+
+        request.done(function (result) {
+            $("#distribution_result_div").html(result);
+        });
+    }
+}
+
+function StartDistribution(id) {
+    running = true;
+    DoNext(id);
+}
+
+function EndDistribution() {
+    running = false;
+}

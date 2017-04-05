@@ -38,6 +38,12 @@ use yii\bootstrap\Tabs;
     ]) ?>
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create Btn') : Yii::t('app', 'Update Btn'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::a(Yii::t('app', 'Cancell Btn'), ['index', 'type' => $reference->referenceType->id, 'reference_id' => $reference->id], ['class' => 'btn btn-default']); ?>
+        <?
+        if (!$model->isNewRecord) {
+            echo Html::a(Yii::t('app', 'Delete Btn'), ['delete', 'type' => $reference->referenceType->id, 'reference_id' => $reference->id, 'id' => $model->id], ['class' => 'btn btn-danger pull-right', 'data-method' => 'post']);
+        }
+        ?>
     </div>
     <?php ActiveForm::end(); ?>
     <p class="bg-warning text-warning small notify"><?= Yii::t('app', 'Sure fields') ?></p>

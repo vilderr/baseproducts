@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = ['label' => Yii::t('app/reference', 'Reference 
             [
                 'format'         => 'raw',
                 'value'          => function ($model) use ($reference) {
-                    return $model->active ? Html::a(Yii::t('app/distribution', 'Start'), ['process', 'type' => $reference->referenceType->id, 'reference_id' => $reference->id, 'id' => $model->id], ['class' => 'btn btn-info btn-xs']) : '&nbsp;';
+                    return $model->active ? Html::a(Yii::t('app/distribution', 'Start'), ['process', 'id' => $model->id], ['class' => 'btn btn-info btn-xs']) : '&nbsp;';
                 },
                 'options'        => [
                     'width' => '90px',

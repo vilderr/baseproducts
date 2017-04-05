@@ -23,16 +23,12 @@ class DistributionAsset extends AssetBundle
         'js/distribution/script.js',
     ];
 
-    /*
-    public $jsOptions = [
-        'position' => \yii\web\View::POS_HEAD,
-    ];
-    */
     public $css = [
         'css/distribution/styles.css',
     ];
 
     public $depends = [
+        'yii\web\YiiAsset',
         'yii\web\JqueryAsset',
     ];
 }

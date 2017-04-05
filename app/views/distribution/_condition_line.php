@@ -21,7 +21,7 @@ $list = [
     'section' => 'Раздел родитель',
 ];
 if ($reference->catalog) {
-    $list['props'] = 'Исходные свойства';
+    $list['current_props'] = 'Исходные свойства';
     $list['price'] = 'Диапазон цены';
 }
 ?>
@@ -32,7 +32,7 @@ if ($reference->catalog) {
         </div>
         <div class="form-group condition-value value-box">
             <?
-            if ($value) {
+            if ($value !== null) {
                 echo $this->render('_condition_value', [
                     'model'     => $model,
                     'condition' => $name,

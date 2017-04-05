@@ -2,6 +2,7 @@
 
 namespace app\models\distribution;
 
+use app\models\reference\Reference;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 
@@ -81,10 +82,34 @@ class Distribution extends \yii\db\ActiveRecord
         return $this->hasMany(DistributionPart::className(), ['distribution_id' => 'id']);
     }
 
-    public function afterSave($insert, $changedAttributes)
+    public function getActiveParts()
     {
-        parent::afterSave($insert, $changedAttributes);
+        return $this->getParts()->where(['active' => 1]);
+    }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getReference()
+    {
+        return $this->hasOne(Reference::className(), ['id' => 'reference_id'])->with('referenceType');
+    }
 
+    /**
+     * @return bool
+     */
+    public function beforeDelete()
+    {
+        if (!parent::beforeDelete())
+            return false;
+
+        foreach ($this->parts as $part) {
+            /**
+             * @var $part \app\models\distribution\DistributionPart
+             */
+            $part->unlink('distribution', $this, true);
+        }
+
+        return true;
     }
 }

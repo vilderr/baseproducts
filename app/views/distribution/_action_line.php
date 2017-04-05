@@ -21,6 +21,7 @@ $list = [
     'active'  => 'Активность',
     'section' => 'Перенести в раздел',
 ];
+
 ?>
 <div class="action-line line" data-content="operation">
     <div class="clearfix form-inline">
@@ -29,7 +30,7 @@ $list = [
         </div>
         <div class="form-group action-value value-box">
             <?
-            if ($value) {
+            if ($value !== null) {
                 echo $this->render('_operation_value', [
                     'model'     => $model,
                     'reference' => $reference,

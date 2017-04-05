@@ -18,7 +18,7 @@ $config = [
             'cookieValidationKey' => 'VODh2qVud2MB7kT8Hj0P9WS_IQPQpiON',
         ],
         'assetManager' => [
-            'forceCopy' => YII_ENV_DEV ? true : false,
+            'forceCopy' => true,
             'bundles'   => [
                 'yii\web\JqueryAsset'          => [
                     'js' => [YII_DEBUG ? 'jquery.js' : 'jquery.min.js'],

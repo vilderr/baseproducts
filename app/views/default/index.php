@@ -7,10 +7,4 @@
  * @var $this yii\web\View
  */
 
-use app\models\distribution\Distribution;
-
 $this->title = Yii::t('app', 'Admin Panel');
-
-$model = Distribution::find()->limit(1)->where(['id' => 8])->with(['reference', 'activeParts'])->one();
-
-echo '<pre>'; print_r($model); echo '</pre>';

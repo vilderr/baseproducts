@@ -26,7 +26,7 @@ final class Parser
      */
     public function init(&$NS)
     {
-        $this->next_step = $NS;
+        $this->next_step = &$NS;
         $this->distribution = Distribution::find()->limit(1)->where(['id' => $this->next_step['id']])->with(['reference', 'activeParts'])->one();
         if (!isset($this->next_step['last_id'])) {
             $this->next_step['last_id'] = 0;
@@ -51,8 +51,8 @@ final class Parser
 
         $query = ReferenceElement::find()
             ->limit(2000)
-            ->where(['reference_id' => $this->distribution->reference->id])
-            ->andWhere(['>', 'id', $this->next_step['last_id']]);
+            ->where(['>', 'id', $this->next_step['last_id']])
+            ->andWhere(['reference_id' => $this->distribution->reference->id]);
 
         foreach ($data['condition'] as $name => $value) {
             switch ($name) {

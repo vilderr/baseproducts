@@ -12,7 +12,7 @@ $this->title = Yii::t('app', 'Admin Panel');
 use app\models\file\File;
 use app\models\reference\ReferenceElement;
 use  yii\helpers\FileHelper;
-use app\core\httprequest\HttpRequest;
+use app\core\http\HttpRequest;
 
 $image = fopen(Yii::$app->getBasePath().'/upload/image.jpg', 'wb');
 $loaded = HttpRequest::get('https://blackstarshop.ru/image/catalog/new-catalog/Women/LA1816-53466.png')->receive($image)->ok();

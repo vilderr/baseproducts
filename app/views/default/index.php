@@ -14,15 +14,12 @@ use app\models\reference\ReferenceElement;
 use  yii\helpers\FileHelper;
 use app\core\http\HttpRequest;
 
-/*
-$image = fopen(Yii::$app->getBasePath().'/upload/image.jpg', 'wb');
+
+$image = fopen(Yii::$app->getBasePath().'/upload/image.jpg', 'w+b');
 $loaded = HttpRequest::get('https://blackstarshop.ru/image/catalog/new-catalog/Women/LA1816-53466.png')->receive($image)->ok();
 
 echo $loaded;
-*/
 
 //$arFile = File::makeArray('https://blackstarshop.ru/image/catalog/new-catalog/Women/LA1816-53466.png');
 //echo '<pre>'; print_r($arFile); echo '</pre>';
-
-phpinfo();
 

@@ -260,12 +260,22 @@ class File extends BaseFile
             }
             */
 
-
+            /*
             $ob = new HttpClient();
             if ($ob->Download($path, $temp_path)) {
                 $arFile = static::makeArray($temp_path);
             }
             else {
+                return NULL;
+            }
+            */
+
+            if (self::downloadFile($path, $temp_path))
+            {
+                $arFile = static::makeArray($temp_path);
+            }
+            else
+            {
                 return NULL;
             }
 
@@ -417,5 +427,30 @@ class File extends BaseFile
         }
 
         return $type;
+    }
+
+    public static function downloadFile($url, $file_path)
+    {
+        $dir = StringHelper::dirname($file_path);
+        FileHelper::createDirectory($dir);
+
+        $handler = fopen($file_path, "w+b");
+
+        if ($handler !== false && $resource = curl_init()) {
+
+            curl_setopt($resource, CURLOPT_URL, $url);
+            curl_setopt($resource, CURLOPT_FILE, $handler);
+            curl_setopt($resource, CURLOPT_HEADER, 0);
+            curl_setopt($resource, CURLOPT_CONNECTTIMEOUT, 5);
+
+            $result = curl_exec($resource);
+
+            curl_close($resource);
+            fclose($handler);
+
+            return $result;
+        }
+
+        return false;
     }
 }

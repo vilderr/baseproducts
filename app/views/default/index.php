@@ -16,11 +16,11 @@ use  yii\helpers\FileHelper;
 use app\core\http\HttpRequest;
 
 
-$image = fopen(Yii::$app->getBasePath().'/upload/image.jpg', 'w+b');
-$loaded = HttpRequest::get('https://blackstarshop.ru/image/catalog2/women/LA1817-500/LA1817-500d.png')->body();
+//$image = fopen(Yii::$app->getBasePath().'/upload/image.jpg', 'w+b');
+//$loaded = HttpRequest::get('https://blackstarshop.ru/image/catalog2/women/LA1817-500/LA1817-500d.png')->body();
 
-echo '<pre>'; print_r($loaded); echo '</pre>';
+//echo '<pre>'; print_r($loaded); echo '</pre>';
 
-//$arFile = File::makeArray('https://blackstarshop.ru/image/catalog/new-catalog/Women/LA1816-53466.png');
-//echo '<pre>'; print_r($arFile); echo '</pre>';
+$arFile = File::makeArray('https://blackstarshop.ru/image/catalog2/women/LA1817-500/LA1817-500d.png');
+echo '<pre>'; print_r($arFile); echo '</pre>';
 

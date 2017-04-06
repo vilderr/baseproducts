@@ -437,7 +437,6 @@ class File extends BaseFile
 
     public static function downloadFile($url, $file_path)
     {
-        passthru()
         $dir = StringHelper::dirname($file_path);
         FileHelper::createDirectory($dir);
 

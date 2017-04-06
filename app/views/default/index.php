@@ -24,10 +24,10 @@ use app\models\reference\ReferenceElement;
 
 
 $from = "http://image01.bonprix.ru/bonprixbilder/429x600/1459330988/15045961-pJYZXWVt.jpg";
-$to = Yii::$app->getBasePath().'/upload/image.jpg';
+$to = Yii::$app->getBasePath().'/upload';
 
 $result = 0;
-passthru("cd $to && /usr/bin/wget $from > /dev/null &", $result);
+passthru("cd $to && wget $from > /dev/null &", $result);
 
 echo $result;
 

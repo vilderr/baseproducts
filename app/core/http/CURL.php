@@ -35,7 +35,7 @@ class CURLInterface implements HttpURLConnection
             CURLOPT_NOPROGRESS     => true,
             CURLOPT_VERBOSE        => false,
             CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_MAXREDIRS      => 1,
+            CURLOPT_MAXREDIRS      => 3,
         ];
 
         if (array_key_exists('port', $url)) {

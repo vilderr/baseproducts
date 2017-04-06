@@ -13,6 +13,7 @@ use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\StringHelper;
 use yii\httpclient\Client;
+use app\core\web\HttpClient;
 
 /**
  * Class File
@@ -237,6 +238,7 @@ class File extends BaseFile
                 $temp_path = File::getTempName(StringHelper::basename($path));
             }
 
+            /*
             $client = new Client();
             $response = $client->createRequest()
                 ->setMethod('GET')
@@ -253,6 +255,14 @@ class File extends BaseFile
 
                 $arFile = self::makeArray($temp_path);
             } else {
+                return NULL;
+            }
+            */
+            $ob = new HttpClient();
+            if ($ob->Download($path, $temp_path)) {
+                $arFile = static::makeArray($temp_path);
+            }
+            else {
                 return NULL;
             }
 

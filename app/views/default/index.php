@@ -12,24 +12,7 @@ $this->title = Yii::t('app', 'Admin Panel');
 use app\models\file\File;
 use app\models\reference\ReferenceElement;
 use  yii\helpers\FileHelper;
-$start_time = time();
-$interval = 30;
 
-$elements = ReferenceElement::find()->limit(10)->where(['reference_id' => '3', 'detail_picture' => null])->all();
-foreach ($elements as $element)
-{
-    $arFile = File::makeArray($element->picture_src);
-    if(is_array($arFile))
-    {
-        $element->detail_picture = File::saveFile($arFile, 'reference');
-    }
-    else
-    {
-        $element->reference_section_id = 30;
-    }
+$arFile = File::makeArray('https://blackstarshop.ru/image/catalog/new-catalog/Women/LA1816-53466.png');
+echo '<pre>'; print_r($arFile); echo '</pre>';
 
-    $element->save(false);
-
-    if ($interval > 0 && (time() - $start_time) > $interval)
-        break;
-}

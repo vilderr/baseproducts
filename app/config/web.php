@@ -97,16 +97,6 @@ $config = [
             'class' => 'yii\web\DbSession',
         ],
     ],
-    'modules'      => [
-        'debug' => [
-            'class'  => 'yii\\debug\\Module',
-            'panels' => [
-                'httpclient' => [
-                    'class' => 'yii\\httpclient\\debug\\HttpClientPanel',
-                ],
-            ],
-        ],
-    ],
     'params'       => $params,
 ];
 

@@ -2,6 +2,7 @@
 
 namespace app\models\reference;
 
+use app\models\file\BaseFile;
 use Yii;
 use yii\base\Model;
 use yii\behaviors\TimestampBehavior;
@@ -207,7 +208,16 @@ class ReferenceElement extends \yii\db\ActiveRecord
              * @var $property ReferenceElementProperty
              */
             if (!$result = $property->delete())
-                break;
+            {
+                return false;
+            }
+        }
+
+        $picture = BaseFile::findOne($this->detail_picture);
+        if ($picture !== null) {
+            if (!$picture->delete()) {
+                return false;
+            }
         }
 
         return $result;

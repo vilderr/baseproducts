@@ -18,6 +18,7 @@ class ComposerStaticInit791d6a49ae4f2470e4de0e48e00b103b
         'y' => 
         array (
             'yii\\swiftmailer\\' => 16,
+            'yii\\httpclient\\' => 15,
             'yii\\gii\\' => 8,
             'yii\\faker\\' => 10,
             'yii\\debug\\' => 10,
@@ -28,10 +29,6 @@ class ComposerStaticInit791d6a49ae4f2470e4de0e48e00b103b
         'p' => 
         array (
             'phpDocumentor\\Reflection\\' => 25,
-        ),
-        'd' => 
-        array (
-            'dmstr\\' => 6,
         ),
         'c' => 
         array (
@@ -85,6 +82,10 @@ class ComposerStaticInit791d6a49ae4f2470e4de0e48e00b103b
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2-swiftmailer',
         ),
+        'yii\\httpclient\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yiisoft/yii2-httpclient',
+        ),
         'yii\\gii\\' => 
         array (
             0 => __DIR__ . '/..' . '/yiisoft/yii2-gii',
@@ -114,10 +115,6 @@ class ComposerStaticInit791d6a49ae4f2470e4de0e48e00b103b
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
-        ),
-        'dmstr\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/dmstr/yii2-adminlte-asset',
         ),
         'creocoder\\nestedsets\\' => 
         array (
@@ -206,13 +203,6 @@ class ComposerStaticInit791d6a49ae4f2470e4de0e48e00b103b
     );
 
     public static $prefixesPsr0 = array (
-        'c' => 
-        array (
-            'cebe\\gravatar\\' => 
-            array (
-                0 => __DIR__ . '/..' . '/cebe/yii2-gravatar',
-            ),
-        ),
         'P' => 
         array (
             'Prophecy\\' => 

@@ -8,7 +8,7 @@ $webroot = dirname($basePath);
 $config = [
     'id'           => 'basic',
     'basePath'     => $basePath,
-    'bootstrap'    => ['log'],
+    'bootstrap'    => ['log', 'debug'],
     'language'     => 'ru-RU',
     'runtimePath'  => $webroot . '/runtime',
     'vendorPath'   => $webroot . '/vendor',
@@ -95,6 +95,16 @@ $config = [
         ],
         'session'      => [
             'class' => 'yii\web\DbSession',
+        ],
+    ],
+    'modules'      => [
+        'debug' => [
+            'class'  => 'yii\\debug\\Module',
+            'panels' => [
+                'httpclient' => [
+                    'class' => 'yii\\httpclient\\debug\\HttpClientPanel',
+                ],
+            ],
         ],
     ],
     'params'       => $params,

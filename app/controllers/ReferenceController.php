@@ -41,7 +41,6 @@ class ReferenceController extends Controller
                     'load-property-setting' => ['POST'],
                     'reference-chooser'     => ['POST'],
                     'delete-section'        => ['POST'],
-                    'delete-element'        => ['POST'],
                 ],
             ],
         ];

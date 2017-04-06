@@ -10,5 +10,26 @@
 $this->title = Yii::t('app', 'Admin Panel');
 
 use app\models\file\File;
+use app\models\reference\ReferenceElement;
+use  yii\helpers\FileHelper;
+$start_time = time();
+$interval = 30;
 
-$arFile = File::makeArray('http://static.quiksilver.com/www/store.quiksilver.eu/html/images/catalogs/global/roxy-products/all/default/hi-res/erjjk03089_steffijk,w_kvj0_frt1.jpg');
+$elements = ReferenceElement::find()->limit(10)->where(['reference_id' => '3', 'detail_picture' => null])->all();
+foreach ($elements as $element)
+{
+    $arFile = File::makeArray($element->picture_src);
+    if(is_array($arFile))
+    {
+        $element->detail_picture = File::saveFile($arFile, 'reference');
+    }
+    else
+    {
+        $element->reference_section_id = 32;
+    }
+
+    $element->save(false);
+
+    if ($interval > 0 && (time() - $start_time) > $interval)
+        break;
+}

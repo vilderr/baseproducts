@@ -3,9 +3,10 @@
 namespace app\models\file;
 
 use Yii;
+use yii\helpers\FileHelper;
 
 /**
- * This is the model class for table "file".
+ * This is the model class for table 'file'.
  *
  * @property integer $id
  * @property string $name
@@ -46,15 +47,35 @@ class BaseFile extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
+            'id'            => Yii::t('app', 'ID'),
+            'name'          => Yii::t('app', 'Name'),
             'original_name' => Yii::t('app', 'Original Name'),
-            'external_id' => Yii::t('app', 'External ID'),
-            'height' => Yii::t('app', 'Height'),
-            'width' => Yii::t('app', 'Width'),
-            'size' => Yii::t('app', 'Size'),
-            'type' => Yii::t('app', 'Type'),
-            'subdir' => Yii::t('app', 'Subdir'),
+            'external_id'   => Yii::t('app', 'External ID'),
+            'height'        => Yii::t('app', 'Height'),
+            'width'         => Yii::t('app', 'Width'),
+            'size'          => Yii::t('app', 'Size'),
+            'type'          => Yii::t('app', 'Type'),
+            'subdir'        => Yii::t('app', 'Subdir'),
         ];
+    }
+
+    /**
+     * @return bool
+     */
+    public function beforeDelete()
+    {
+        if (!parent::beforeDelete())
+            return false;
+
+        $dname = Yii::$app->getBasePath() . '/upload/' . $this->subdir;
+        $fname = $dname . '/' . $this->name;
+        if (File::fileExists($fname) && unlink($fname)) {
+            if (empty(FileHelper::findFiles($dname, ['except' => ['.DS_Store']])))
+                FileHelper::removeDirectory($dname);
+
+            return true;
+        }
+
+        return false;
     }
 }

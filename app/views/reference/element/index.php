@@ -135,7 +135,7 @@ $this->params['breadcrumbs'][] = ['label' => $section->name];
                     'template'       => '{delete}',
                     'buttons'        => [
                         'delete' => function ($url, $model) {
-                            return Html::a('<i class="fa fa-trash"></i>', ['delete-element', 'type' => $model->reference->reference_type_id, 'reference_id' => $model->reference->id, 'id' => $model->id], ['data-method' => 'post', 'data-confirm' => 'Вы действительно хотите удалить элемент?']);
+                            return Html::a('<i class="fa fa-trash"></i>', ['delete-element', 'type' => $model->reference->reference_type_id, 'reference_id' => $model->reference->id, 'id' => $model->id]);
                         },
                     ],
                     'options'        => [

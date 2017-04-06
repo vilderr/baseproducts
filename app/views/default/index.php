@@ -13,6 +13,6 @@ use app\models\file\File;
 use app\models\reference\ReferenceElement;
 use  yii\helpers\FileHelper;
 
-$arFile = File::makeArray('https://blackstarshop.ru/image/catalog/new-catalog/Women/LA1816-53466.png');
+$arFile = File::makeArray('http://static.quiksilver.com/www/store.quiksilver.eu/html/images/catalogs/global/roxy-products/all/default/large/erjdp03094_suntripperscropped,w_bla6_frt2.jpg');
 echo '<pre>'; print_r($arFile); echo '</pre>';
 

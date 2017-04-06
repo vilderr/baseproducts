@@ -17,7 +17,7 @@ use app\core\http\HttpRequest;
 
 
 $image = fopen(Yii::$app->getBasePath().'/upload/image.jpg', 'w+b');
-$loaded = HttpRequest::get('http://blackstarshop.ru/image/catalog/new-catalog/Women/LA1816-53466.png')->body();
+$loaded = HttpRequest::get('http://static.quiksilver.com/www/store.quiksilver.eu/html/images/catalogs/global/roxy-products/all/default/large/erjx203058_bandeaushorty,w_bsq6_frt2.jpg')->body();
 
 echo '<pre>'; print_r($loaded); echo '</pre>';
 

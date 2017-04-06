@@ -37,7 +37,7 @@ class File extends BaseFile
 
         $file_type = self::getFileType($path);
 
-        if ($file_type == 'IMAGE')
+        if ($file_type == 'IMAGE' || $file_type == 'UNKNOWN')
             return true;
 
         return false;
@@ -270,12 +270,9 @@ class File extends BaseFile
             }
             */
 
-            if (self::downloadFile($path, $temp_path))
-            {
+            if (self::downloadFile($path, $temp_path)) {
                 $arFile = static::makeArray($temp_path);
-            }
-            else
-            {
+            } else {
                 return NULL;
             }
 
@@ -320,6 +317,14 @@ class File extends BaseFile
 
         if (!isset($arFile['external_id']) && ($external_id != '')) {
             $arFile['external_id'] = $external_id;
+        }
+
+        if (strlen(pathinfo($arFile['name'], PATHINFO_EXTENSION)) < 3) {
+            if ($arFile['type'] == 'unknown')
+                return NULL;
+
+            $ext = FileHelper::getExtensionsByMimeType($arFile['type']);
+            $arFile['name'] = $arFile['name'] . '.' . $ext[0];
         }
 
         return $arFile;
@@ -390,6 +395,7 @@ class File extends BaseFile
     public static function getFileType($path)
     {
         $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+
         switch ($extension) {
             case 'jpg':
             case 'jpeg':
@@ -431,24 +437,26 @@ class File extends BaseFile
 
     public static function downloadFile($url, $file_path)
     {
+        passthru()
         $dir = StringHelper::dirname($file_path);
         FileHelper::createDirectory($dir);
 
         $handler = fopen($file_path, "w+b");
 
-        if ($handler !== false && $resource = curl_init()) {
+        if ($handler !== false && $resource = curl_init($url)) {
 
-            curl_setopt($resource, CURLOPT_URL, $url);
-            curl_setopt($resource, CURLOPT_FILE, $handler);
             curl_setopt($resource, CURLOPT_HEADER, 0);
-            curl_setopt($resource, CURLOPT_CONNECTTIMEOUT, 5);
+            curl_setopt($resource, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($resource, CURLOPT_BINARYTRANSFER,1);
+            curl_setopt($resource, CURLOPT_FOLLOWLOCATION, true);
 
             $result = curl_exec($resource);
 
             curl_close($resource);
+            fwrite($handler, $result);
             fclose($handler);
 
-            return $result;
+            return true;
         }
 
         return false;

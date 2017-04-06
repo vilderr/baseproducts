@@ -25,7 +25,7 @@ foreach ($elements as $element)
     }
     else
     {
-        $element->reference_section_id = 32;
+        $element->reference_section_id = 30;
     }
 
     $element->save(false);

@@ -28,20 +28,21 @@ class CURLInterface implements HttpURLConnection
         if (!$this->curl)
             $this->exception();
 
-        $this->options = array(
+        $this->options = [
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER         => true,
             CURLOPT_ENCODING       => '',
             CURLOPT_NOPROGRESS     => true,
-            CURLOPT_VERBOSE        => false
-        );
+            CURLOPT_VERBOSE        => false,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_MAXREDIRS      => 1,
+        ];
 
-        if (array_key_exists('port', $url))
-        {
+        if (array_key_exists('port', $url)) {
             $this->options[CURLOPT_PORT] = $url['port'];
         }
 
-        $this->options[CURLOPT_URL] = $url['scheme'].'://'.$url['host'].(!empty($url['path']) ? $url['path'] : '/').(!empty($url['query']) ? '?'.$url['query'] : '');
+        $this->options[CURLOPT_URL] = $url['scheme'] . '://' . $url['host'] . (!empty($url['path']) ? $url['path'] : '/') . (!empty($url['query']) ? '?' . $url['query'] : '');
     }
 
     public function getRequestMethod()
@@ -65,8 +66,7 @@ class CURLInterface implements HttpURLConnection
     {
         $this->method = $method;
 
-        switch ($this->method)
-        {
+        switch ($this->method) {
             case HttpRequest::METHOD_POST:
                 $this->options[CURLOPT_POST] = true;
                 $this->setPostFields(null);
@@ -88,8 +88,7 @@ class CURLInterface implements HttpURLConnection
 
     public function getResponse()
     {
-        if ($this->response === null)
-        {
+        if ($this->response === null) {
             $this->setOptions();
             $this->response = curl_exec($this->curl);
             $this->setHeaderFields();
@@ -127,17 +126,15 @@ class CURLInterface implements HttpURLConnection
 
     public function setRequestProperty($name, $value)
     {
-        $this->headers[(string) $name] = (string) $value;
+        $this->headers[(string)$name] = (string)$value;
     }
 
     private function setOptions()
     {
-        if (!empty($this->headers))
-        {
-            $headers = array();
-            foreach ($this->headers as $field => $value)
-            {
-                $headers[] = $field.": ".$value;
+        if (!empty($this->headers)) {
+            $headers = [];
+            foreach ($this->headers as $field => $value) {
+                $headers[] = $field . ": " . $value;
             }
             $this->options[CURLOPT_HTTPHEADER] = $headers;
         }
@@ -184,11 +181,9 @@ class CURLInterface implements HttpURLConnection
 
         $header = substr($this->response, 0, $header_size);
 
-        if (preg_match_all("/(.*?):(.*?)\n/m", $header, $matches))
-        {
+        if (preg_match_all("/(.*?):(.*?)\n/m", $header, $matches)) {
             $count_matches = count($matches[0]);
-            for ($i = 0; $i < $count_matches; $i++)
-            {
+            for ($i = 0; $i < $count_matches; $i++) {
                 $this->response_headers[trim($matches[1][$i])] = trim($matches[2][$i]);
             }
         }

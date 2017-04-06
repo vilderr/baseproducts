@@ -25,7 +25,11 @@ use app\core\http\HttpRequest;
 //echo '<pre>'; print_r($arFile); echo '</pre>';
 $file = Yii::$app->getBasePath().'/upload/image.png';
 $url = 'https://blackstarshop.ru/image/catalog2/women/LA1817-500/LA1817-500d.png';
+$start = microtime(true);
 curl_download($url, $file);
+$end = microtime(true);
+$time = $end - $start;
+printf('Время работы скрипта: %.3F сек.', $time);
 
 function curl_download($url, $file)
 {

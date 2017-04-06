@@ -16,7 +16,7 @@ use app\core\http\HttpRequest;
 
 
 $image = fopen(Yii::$app->getBasePath().'/upload/image.jpg', 'w+b');
-$loaded = HttpRequest::get('https://blackstarshop.ru/image/catalog/new-catalog/Women/LA1816-53466.png');
+$loaded = HttpRequest::get('https://blackstarshop.ru/image/catalog/new-catalog/Women/LA1816-53466.png')->body();
 
 echo '<pre>'; print_r($loaded); echo '</pre>';
 

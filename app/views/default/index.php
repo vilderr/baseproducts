@@ -12,7 +12,13 @@ $this->title = Yii::t('app', 'Admin Panel');
 use app\models\file\File;
 use app\models\reference\ReferenceElement;
 use  yii\helpers\FileHelper;
+use app\core\http\HttpRequest;
 
-$arFile = File::makeArray('http://static.quiksilver.com/www/store.quiksilver.eu/html/images/catalogs/global/roxy-products/all/default/large/erjdp03094_suntripperscropped,w_bla6_frt2.jpg');
-echo '<pre>'; print_r($arFile); echo '</pre>';
+$image = fopen(Yii::$app->getBasePath().'/upload/image.jpg', 'wb');
+$loaded = HttpRequest::get('https://blackstarshop.ru/image/catalog/new-catalog/Women/LA1816-53466.png')->receive($image)->ok();
+
+echo $loaded;
+
+//$arFile = File::makeArray('https://blackstarshop.ru/image/catalog/new-catalog/Women/LA1816-53466.png');
+//echo '<pre>'; print_r($arFile); echo '</pre>';
 

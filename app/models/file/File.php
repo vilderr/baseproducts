@@ -239,6 +239,7 @@ class File extends BaseFile
             }
 
 
+            /*
             $client = new Client();
             $response = $client->createRequest()
                 ->setMethod('GET')
@@ -257,9 +258,9 @@ class File extends BaseFile
             } else {
                 return NULL;
             }
+            */
 
 
-            /*
             $ob = new HttpClient();
             if ($ob->Download($path, $temp_path)) {
                 $arFile = static::makeArray($temp_path);
@@ -267,7 +268,7 @@ class File extends BaseFile
             else {
                 return NULL;
             }
-            */
+
 
         } elseif (preg_match('#^(ftp[s]?|php)://#', $path)) {
 

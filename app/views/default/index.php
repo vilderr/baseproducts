@@ -23,9 +23,9 @@ use app\models\reference\ReferenceElement;
 //echo '<pre>'; print_r($extension); echo '</pre>';
 
 
-$from = "https://blackstarshop.ru/image/catalog/new-caftalog/Women/LA1816-53466.png";
+$from = "https://blackstarshop.ru/image/catalog/new-catalog/Women/LA1816-53466.png";
 $to = Yii::$app->getBasePath().'/upload';
-exec("cd $to && /usr/bin/wget $from > /dev/null &", $result, $error);
+exec("cd $to && /usr/bin/wget $from", $result, $error);
 echo '<pre>'; print_r($error); echo '</pre>';
 
 

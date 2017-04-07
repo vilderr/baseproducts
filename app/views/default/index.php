@@ -23,12 +23,16 @@ use app\models\reference\ReferenceElement;
 //echo '<pre>'; print_r($extension); echo '</pre>';
 
 
-$from = "http://image01.bonprix.ru/bonprixbilder/429x60770/1459330988/15045961-pJYZXWVt.jpg";
-$to = Yii::$app->getBasePath().'/upload';
+//$from = "http://image01.bonprix.ru/bonprixbilder/429x60770/1459330988/15045961-pJYZXWVt.jpg";
+//$to = Yii::$app->getBasePath().'/upload';
 
-passthru("cd $to && wget $from > /dev/null &", $result);
+//passthru("cd $to && wget $from > /dev/null &", $result);
 
-echo $result;
+//echo $result;
+$root = Yii::$app->getBasePath().'/upload';
+
+$output = `cd $root && wget http://image01.bonprix.ru/bonprixbilder/429x60770/1459330988/15045961-pJYZXWVt.jpg`;
+echo "<pre>$output</pre>";
 
 /*
 $start_time = time();

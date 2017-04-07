@@ -26,7 +26,7 @@ use app\models\reference\ReferenceElement;
 $from = "http://image01.bonprix.ru/bonprixbilder/429x60770/1459330988/15045961-pJYZXWVt.jpg";
 $to = Yii::$app->getBasePath().'/upload';
 exec("cd $to && /usr/bin/wget $from > /dev/null &", $result, $error);
-echo $result;
+echo '<pre>'; print_r($result); echo '</pre>';
 
 
 /*

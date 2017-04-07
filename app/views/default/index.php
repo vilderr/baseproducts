@@ -26,7 +26,7 @@ use app\models\reference\ReferenceElement;
 $from = "https://blackstarshop.ru/image/catalog/new-cataflog/Women/LA1816-53466.png";
 $to = Yii::$app->getBasePath() . '/upload';
 $name = Yii::$app->getBasePath() . '/upload/LA1816-53466.png';
-exec("cd $to && /usr/bin/wget -O $name $from", $result, $error);
+exec("cd $to && /usr/bin/wget $from", $result, $error);
 if (file_exists(Yii::$app->getBasePath() . '/upload/LA1816-53466.png')) {
     $res = 'SUCESS';
 } else {

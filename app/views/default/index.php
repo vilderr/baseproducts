@@ -22,7 +22,7 @@ use app\models\reference\ReferenceElement;
 //echo $extension;
 //echo '<pre>'; print_r($extension); echo '</pre>';
 
-
+/*
 $from = "https://blackstarshop.ru/image/catalog/new-catalog/Women/LA1816-53466.png";
 $to = Yii::$app->getBasePath() . '/upload';
 $name = Yii::$app->getBasePath() . '/upload/LA1816-53466.png';
@@ -34,6 +34,13 @@ if (file_exists(Yii::$app->getBasePath() . '/upload/LA1816-53466.png')) {
 }
 
 echo $res;
+*/
+
+$file = Yii::$app->getBasePath() . '/upload/LA1816-53466.png';
+
+$image = new Imagick($file);
+
+echo '<pre>'; print_r($image); echo '</pre>';
 
 
 /*
